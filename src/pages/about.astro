@@ -86,18 +86,30 @@ const timeline = [
         align="center"
         class="reveal mb-16"
       />
-      <div class="max-w-3xl mx-auto flex flex-col gap-12">
-        {timeline.map((item, i) => (
-          <div class="reveal flex gap-8 items-start">
-            <div class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-ember-600 text-cream-50 font-display text-xl font-semibold">
-              {i + 1}
+      <div class="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16 items-center max-w-5xl mx-auto">
+        <div class="reveal flex flex-col gap-12">
+          {timeline.map((item, i) => (
+            <div class="flex gap-8 items-start">
+              <div class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-ember-600 text-cream-50 font-display text-xl font-semibold">
+                {i + 1}
+              </div>
+              <div class="flex-1">
+                <h3 class="text-display-sm font-semibold text-ink-900 mb-3">{item.heading}</h3>
+                <p class="text-ink-500 leading-relaxed">{item.text}</p>
+              </div>
             </div>
-            <div class="flex-1">
-              <h3 class="text-display-sm font-semibold text-ink-900 mb-3">{item.heading}</h3>
-              <p class="text-ink-500 leading-relaxed">{item.text}</p>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        <div class="reveal">
+          <img
+            src="/images/carlin-speaking-mic.webp"
+            alt="Carlin speaking to an audience of youth"
+            width="812"
+            height="839"
+            loading="lazy"
+            class="aspect-square w-full rounded-2xl object-cover"
+          />
+        </div>
       </div>
     </div>
   </section>

@@ -6,15 +6,32 @@ import Button from '../components/Button.astro';
 
 const title = 'Kisik Youth Wellness';
 const description =
-  'Kisik Youth Wellness — founded by Carlin Nordstrom, supporting Indigenous youth through wellness programs, mentorship, and community engagement.';
+  'Kisik Youth Wellness is a Saskatoon-based nonprofit founded by Carlin Nordstrom, running land-based wellness camps, educational tours, and motivational speaking for Indigenous and at-risk youth across Saskatchewan.';
 
 const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Kisik Youth Wellness',
-    founder: { '@type': 'Person', name: 'Carlin Nordstrom' },
-    description: 'Youth wellness organization founded by Carlin Nordstrom, supporting Indigenous youth through wellness programs, mentorship, and community engagement.',
+    url: 'https://www.kisikyouthwellness.ca/',
+    founder: { '@type': 'Person', name: 'Carlin Nordstrom', jobTitle: 'Executive Director' },
+    description: 'Saskatoon-based nonprofit supporting Indigenous and at-risk youth through land-based wellness camps, educational tours, and motivational speaking.',
+    areaServed: { '@type': 'AdministrativeArea', name: 'Saskatchewan, Canada' },
+  },
+];
+
+const programs = [
+  {
+    title: 'Northern Land-Based Wellness Camps',
+    text: 'Wellness camps in northern Saskatchewan for at-risk and Indigenous youth, combining wilderness training, land-based learning, cultural healing, fishing, archery, target shooting, physical fitness, and community building. Youth learn traditional Indigenous skills and build lasting friendships.',
+  },
+  {
+    title: 'Future Possibilities Educational Tours',
+    text: 'Educational tours for First Nations students from northern Saskatchewan to post-secondary and industry sites — including Sask Polytech, SIIT, the University of Saskatchewan, SaskPower, and other industrial companies — to show students the opportunities open to them and help them imagine their futures.',
+  },
+  {
+    title: 'Motivational Speaking Events',
+    text: 'Executive Director Carlin Nordstrom speaks to youth across Saskatchewan and Canada on setting goals, overcoming adversity, and handling failure — encouraging honest conversations about staying true to yourself.',
   },
 ];
 ---
@@ -36,7 +53,7 @@ const jsonLd = [
         Kisik Youth Wellness
       </h1>
       <p class="mt-6 text-xl text-ink-600 max-w-2xl text-pretty leading-relaxed">
-        Founded by Carlin Nordstrom, Kisik Youth Wellness is dedicated to supporting Indigenous youth through wellness programs, mentorship, and community engagement.
+        A Saskatoon-based nonprofit founded by Carlin Nordstrom, Kisik Youth Wellness supports Indigenous and at-risk youth in building holistic well-being, physical fitness, and a thriving lifestyle — bridging land and city through wilderness training, life-skills learning, and mentorship.
       </p>
     </div>
   </section>
@@ -68,8 +85,33 @@ const jsonLd = [
     </div>
   </section>
 
-  <!-- EDITOR NOTE: Add a "Programs" section here once specific program names/descriptions
-       are supplied by Carlin (e.g. specific camps, age groups, locations). -->
+  <section class="bg-cream-200 py-24 md:py-32">
+    <div class="container-content">
+      <SectionHeading
+        eyebrow="Programs"
+        title="What We Offer"
+        align="center"
+        class="reveal mb-16"
+      />
+      <div class="grid gap-8 md:grid-cols-3">
+        {programs.map((p) => (
+          <div class="reveal rounded-2xl border border-ink-200 bg-cream-50 p-8">
+            <h3 class="text-display-sm font-semibold text-ink-900 mb-4">{p.title}</h3>
+            <p class="text-ink-500 leading-relaxed">{p.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="container-content py-24 md:py-32 max-w-3xl text-center">
+    <div class="reveal">
+      <SectionHeading eyebrow="What Parents Say" title="Real impact, in their own words" align="center" class="mb-8" />
+      <p class="text-ink-600 leading-relaxed text-pretty">
+        Parents of camp participants describe mentorship that has changed the direction of their children's lives — one parent shared that their child now plans to attend every year and eventually become a counsellor themselves. Read more on the official <a href="https://www.kisikyouthwellness.ca/" target="_blank" rel="noopener noreferrer" class="font-semibold text-ember-600 hover:text-ember-700">Kisik Youth Wellness website</a>.
+      </p>
+    </div>
+  </section>
 
   <section class="bg-cream-200 py-24 md:py-32">
     <div class="container-content">

@@ -1,0 +1,72 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTABanner from '../components/CTABanner.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Button from '../components/Button.astro';
+
+const title = 'Pathways to Success';
+const description =
+  'Kisik Pathways to Success — founded by Carlin Nordstrom, empowering Indigenous communities through leadership and success programs.';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Kisik Pathways to Success',
+    founder: { '@type': 'Person', name: 'Carlin Nordstrom' },
+    description: 'Leadership and success program founded by Carlin Nordstrom, empowering Indigenous communities through leadership development and goal-setting.',
+  },
+];
+---
+
+<Layout title={title} description={description} jsonLd={jsonLd}>
+  <section class="bg-ink-900 text-cream-50">
+    <div class="container-content py-20 md:py-28">
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-ember-400 mb-4">
+        Leadership & Success
+      </p>
+      <h1 class="text-display-lg font-semibold text-cream-50 text-balance">
+        Pathways to Success
+      </h1>
+      <p class="mt-6 text-xl text-ink-300 max-w-2xl text-pretty leading-relaxed">
+        Founded by Carlin Nordstrom, Kisik Pathways to Success empowers Indigenous communities through leadership development, goal-setting, and practical strategies for achieving success.
+      </p>
+    </div>
+  </section>
+
+  <section class="container-content py-24 md:py-32">
+    <div class="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center">
+      <div class="reveal">
+        <SectionHeading
+          eyebrow="Our Approach"
+          title="Creating Lasting Results"
+        />
+        <p class="mt-6 text-ink-600 leading-relaxed text-pretty">
+          Now in its fifth year, Kisik Pathways to Success focuses on career and leadership development, connecting youth with opportunity through industry leaders. The program works with Nutrien, SaskPower and Cameco to open real doors for participants.
+        </p>
+        <p class="mt-4 text-ink-600 leading-relaxed">
+          Drawing from his own journey — from battling racism in minor hockey to reaching the professional ranks and the Ottawa Senators — Carlin teaches the principles of focus, leadership, and perseverance that turned his dreams into reality.
+        </p>
+      </div>
+      <div class="reveal">
+        <img
+          src="/images/pathways-trades-training.webp"
+          alt="Youth getting hands-on industry trades training through Kisik Pathways to Success"
+          width="618"
+          height="824"
+          loading="lazy"
+          class="aspect-[3/4] w-full rounded-2xl object-cover"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- EDITOR NOTE: Add a "Program Highlights" section here once specific program
+       elements are supplied by Carlin (e.g. specific curriculum components, partners). -->
+
+  <CTABanner
+    title="Discover Your Pathway to Success"
+    subtitle="If your organization wants to partner with Kisik Pathways to Success or bring the program to your community, get in touch to discuss opportunities."
+    label="Get in Touch"
+  />
+</Layout>

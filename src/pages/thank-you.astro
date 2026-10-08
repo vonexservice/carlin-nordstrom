@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+
+const title = 'Thank You';
+const description = 'Thank you for your booking inquiry. Carlin will be in touch soon.';
+---
+
+<Layout title={title} description={description} noindex={true}>
+  <section class="container-content py-32 md:py-40 max-w-2xl text-center">
+    <h1 class="text-display-lg font-semibold text-ink-900 text-balance">
+      Thank You
+    </h1>
+    <p class="mt-6 text-lg text-ink-600 leading-relaxed">
+      Your inquiry has been received. Carlin's team will be in touch soon to discuss your event.
+    </p>
+    <div class="mt-10">
+      <Button href="/" variant="primary" size="md">Back to Home</Button>
+    </div>
+  </section>
+</Layout>

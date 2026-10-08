@@ -1,0 +1,86 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CTABanner from '../../components/CTABanner.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import Button from '../../components/Button.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../../config/site';
+import { provinces } from '../../data/speaking-provinces';
+
+export async function getStaticPaths() {
+  return provinces.map((p) => ({ params: { slug: p.slug }, props: { province: p } }));
+}
+
+const { province } = Astro.props;
+
+const testimonials = province.testimonialOrgMatch
+  ? (await getCollection('testimonials')).filter(
+      (t) => !t.data.quote.startsWith('[PLACEHOLDER') && t.data.organization?.includes(province.testimonialOrgMatch)
+    )
+  : [];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: site.name,
+    url: `${site.url}/speaking/${province.slug}`,
+    description: province.description,
+    jobTitle: 'Indigenous Motivational & Keynote Speaker',
+    areaServed: {
+      '@type': 'AdministrativeArea',
+      name: `${province.name}, Canada`,
+    },
+  },
+];
+---
+
+<Layout
+  title={province.title}
+  description={province.description}
+  canonical={`/speaking/${province.slug}`}
+  jsonLd={jsonLd}
+>
+  <section class="bg-ink-900 text-cream-50">
+    <div class="container-content py-20 md:py-28">
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-ember-400 mb-4">
+        {province.eyebrow}
+      </p>
+      <h1 class="text-display-lg font-semibold text-cream-50 text-balance">
+        Speaking in {province.name}
+      </h1>
+      <p class="mt-6 text-xl text-ink-300 max-w-2xl text-pretty leading-relaxed">
+        {province.description}
+      </p>
+    </div>
+  </section>
+
+  <section class="container-content py-24 md:py-32 max-w-3xl">
+    <div class="reveal space-y-6">
+      {province.intro.map((para) => <p class="text-ink-600 leading-relaxed text-pretty">{para}</p>)}
+    </div>
+
+    {testimonials.length > 0 && (
+      <div class="reveal mt-12 rounded-2xl border border-ink-100 bg-cream-200 p-8">
+        {testimonials.map((t) => (
+          <>
+            <p class="text-lg italic leading-relaxed text-ink-700">"{t.data.quote}"</p>
+            <p class="mt-4 border-t border-ink-200 pt-4 text-sm font-semibold text-ink-900">
+              {t.data.role} {t.data.author}, {t.data.organization}
+            </p>
+          </>
+        ))}
+      </div>
+    )}
+
+    <div class="reveal mt-12 flex flex-wrap gap-4">
+      <Button href="/keynotes" variant="outline" size="md">See Keynote Topics</Button>
+      <Button href="/workshops" variant="outline" size="md">See Workshops</Button>
+    </div>
+  </section>
+
+  <CTABanner
+    title={`Book Carlin for Your ${province.name} Event`}
+    subtitle={`If your school, agency, or community in ${province.name} wants to book Carlin for a keynote or workshop, get in touch to discuss your event.`}
+  />
+</Layout>

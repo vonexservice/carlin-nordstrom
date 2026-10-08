@@ -1,0 +1,113 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTABanner from '../components/CTABanner.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Button from '../components/Button.astro';
+import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
+import { getCollection } from 'astro:content';
+
+const title = 'Workshops';
+const description =
+  'Interactive workshops by Carlin Nordstrom — Health & Wellness, Lateral Violence, and Warrior Spirit workshops designed for Indigenous youth and communities.';
+
+const workshops = (await getCollection('workshops')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const workshopPhotos: Record<string, { src: string; alt: string; width: number; height: number }> = {
+  'Health & Wellness': {
+    src: '/images/carlin-classroom.webp',
+    alt: 'Carlin leading a Health & Wellness classroom session',
+    width: 1179,
+    height: 1142,
+  },
+  'Warrior Spirit': {
+    src: '/images/kisik-presentation.webp',
+    alt: 'Carlin presenting at a Warrior Spirit workshop',
+    width: 1500,
+    height: 2000,
+  },
+  'RISE UP': {
+    src: '/images/carlin-gym-assembly.webp',
+    alt: 'Carlin with students at a RISE UP program assembly',
+    width: 843,
+    height: 632,
+  },
+};
+---
+
+<Layout title={title} description={description}>
+  <section class="bg-ink-900 text-cream-50">
+    <div class="container-content py-20 md:py-28">
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-ember-400 mb-4">
+        My Workshops
+      </p>
+      <h1 class="text-display-lg font-semibold text-cream-50 text-balance">
+        Workshops
+      </h1>
+      <p class="mt-6 text-xl text-ink-300 max-w-2xl text-pretty leading-relaxed">
+        With a passion for empowering young minds, through engaging talks and interactive sessions, I'm able to connect with youth on a personal level, addressing challenges and instilling confidence and purpose.
+      </p>
+    </div>
+  </section>
+
+  <section class="container-content py-24 md:py-32">
+    <div class="flex flex-col gap-20">
+      {workshops.map((w, i) => (
+        <div class={`reveal grid gap-12 lg:grid-cols-2 lg:gap-20 items-center ${i % 2 === 1 ? 'lg:[&>*:first-child]:order-2' : ''}`}>
+          <div>
+            <p class="text-sm font-semibold uppercase tracking-[0.15em] text-ember-600 mb-3">
+              Workshop {i + 1}
+            </p>
+            <h2 class="text-display-md font-semibold text-ink-900 mb-6 text-balance">
+              {w.data.title}
+            </h2>
+            <div class="text-ink-600 leading-relaxed space-y-4">
+              {w.data.description.startsWith('[PLACEHOLDER') ? (
+                <p class="text-ink-400 italic">Full description coming soon.</p>
+              ) : (
+                w.data.description.split('\n\n').map((para) => <p>{para}</p>)
+              )}
+            </div>
+            {w.data.outcomes.length > 0 && (
+              <ul class="mt-6 space-y-3">
+                {w.data.outcomes.map((outcome) => (
+                  <li class="flex gap-3 items-start">
+                    <svg class="w-5 h-5 text-ember-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    <span class="text-ink-700">{outcome}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <div class="mt-8">
+              <Button href="/contact" variant="primary" size="md">
+                Book This Workshop
+              </Button>
+            </div>
+          </div>
+          <div>
+            {workshopPhotos[w.data.title] ? (
+              <img
+                src={workshopPhotos[w.data.title].src}
+                alt={workshopPhotos[w.data.title].alt}
+                width={workshopPhotos[w.data.title].width}
+                height={workshopPhotos[w.data.title].height}
+                loading="lazy"
+                class="aspect-[4/3] w-full rounded-2xl object-cover"
+              />
+            ) : (
+              <PhotoPlaceholder label={`${w.data.title} workshop image`} />
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <CTABanner
+    title="Bring a Workshop to Your Community"
+    subtitle="If your school, agency, or community organization wants to host one of these workshops, get in touch to discuss availability and customization."
+  />
+</Layout>

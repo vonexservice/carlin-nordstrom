@@ -1,0 +1,83 @@
+---
+export interface JsonLdProps {
+  type: 'Person' | 'Organization' | 'FAQPage' | 'BlogPosting';
+  data: Record<string, any>;
+}
+
+import { site } from '../config/site';
+
+const { type, data } = Astro.props as JsonLdProps;
+
+let schema: Record<string, any>;
+
+switch (type) {
+  case 'Person':
+    schema = {
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: data.name || site.name,
+      url: site.url,
+      description: data.description || site.description,
+      sameAs: data.sameAs || [],
+      knowsAbout: data.knowsAbout || [],
+      ...data,
+    };
+    break;
+  case 'Organization':
+    schema = {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: data.name,
+      url: data.url || site.url,
+      ...data,
+    };
+    break;
+  case 'FAQPage':
+    schema = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: (data.questions || []).map(
+        (q: { question: string; answer: string }) => ({
+          '@type': 'Question',
+          name: q.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: q.answer,
+          },
+        })
+      ),
+    };
+    break;
+  case 'BlogPosting':
+    schema = {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: data.headline,
+      description: data.description,
+      image: data.image,
+      datePublished: data.datePublished,
+      dateModified: data.dateModified || data.datePublished,
+      author: {
+        '@type': 'Person',
+        name: data.author || site.name,
+        url: site.url,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: site.name,
+        url: site.url,
+      },
+      mainEntityOfPage: data.url
+        ? { '@type': 'WebPage', '@id': data.url }
+        : undefined,
+      ...data,
+    };
+    break;
+  default:
+    schema = { '@context': 'https://schema.org', ...data };
+}
+
+const jsonLdString = JSON.stringify(schema);
+---
+
+<script type="application/ld+json" set:html={jsonLdString} />

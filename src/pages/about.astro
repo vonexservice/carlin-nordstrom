@@ -1,0 +1,116 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTABanner from '../components/CTABanner.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Button from '../components/Button.astro';
+
+const title = 'About Carlin Nordstrom';
+const description =
+  'Carlin Nordstrom is a member of the Poundmaker First Nation, a former professional hockey player, and an Indigenous motivational speaker empowering youth and communities across Canada.';
+
+const timeline = [
+  {
+    heading: 'I grew up in Warman, Saskatchewan Canada',
+    text: 'Playing in the minor hockey system, I battled through racism as the only First Nations player on my team.',
+  },
+  {
+    heading: 'I earned a scholarship to Western Michigan University',
+    text: 'Where I entered into NCAA Division 1 Hockey and was promoted to assistant captain.',
+  },
+  {
+    heading: 'I reached my goal and played games with The Ottawa Senators',
+    text: 'What followed was a professional hockey career, highlighted by 2 games with the Ottawa Senators.',
+  },
+];
+---
+
+<Layout title={title} description={description}>
+  <section class="bg-ink-900 text-cream-50">
+    <div class="container-content py-20 md:py-28">
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-ember-400 mb-4">
+        Who I Am
+      </p>
+      <h1 class="text-display-lg font-semibold text-cream-50 text-balance">
+        Carlin Nordstrom
+      </h1>
+      <p class="mt-6 text-xl text-ink-300 max-w-2xl text-pretty leading-relaxed">
+        A member of the Poundmaker First Nation. I grew up in Warman, Saskatchewan playing in their minor hockey system, battling through racism as the only First Nations player on my team.
+      </p>
+    </div>
+  </section>
+
+  <!-- What I've Been Through -->
+  <section class="container-content py-24 md:py-32">
+    <div class="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center">
+      <div class="reveal">
+        <SectionHeading
+          eyebrow="What I've Been Through"
+          title="Focus on your dream & breakthrough all obstacles"
+        />
+        <p class="mt-6 text-lg text-ink-600 leading-relaxed text-pretty">
+          My story is one of overcoming adversity, focusing on my dream, developing and implementing a winning attitude and going for it!
+        </p>
+        <p class="mt-4 text-ink-600 leading-relaxed">
+          I speak from life experience and from the heart. I have a great passion for inspiring others with my story of overcoming adversity and achieving success. From the Saskatchewan Junior hockey league to a scholarship to Western Michigan University and NCAA Division 1 Hockey, I was promoted to assistant captain followed by a 4 year professional hockey career, the highlight being 2 games with the Ottawa Senators.
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row gap-6">
+          <div>
+            <p class="text-display-sm font-semibold text-ember-600">9+</p>
+            <p class="text-sm text-ink-500 mt-1">Years motivational speaking</p>
+          </div>
+          <div>
+            <p class="text-display-sm font-semibold text-ember-600">Kisik</p>
+            <p class="text-sm text-ink-500 mt-1">Youth Camp Leader / Director</p>
+          </div>
+        </div>
+      </div>
+      <div class="reveal relative flex items-end justify-center overflow-hidden rounded-2xl bg-ink-900">
+        <img
+          src="/images/carlin-arms-crossed.png"
+          alt="Carlin Nordstrom standing with his arms crossed"
+          width="1515"
+          height="2055"
+          loading="lazy"
+          class="max-h-[600px] w-full object-contain object-bottom"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline / Journey -->
+  <section class="bg-cream-200 py-24 md:py-32">
+    <div class="container-content">
+      <SectionHeading
+        eyebrow="My Journey"
+        title="From Saskatchewan to the Ottawa Senators"
+        align="center"
+        class="reveal mb-16"
+      />
+      <div class="max-w-3xl mx-auto flex flex-col gap-12">
+        {timeline.map((item, i) => (
+          <div class="reveal flex gap-8 items-start">
+            <div class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-ember-600 text-cream-50 font-display text-xl font-semibold">
+              {i + 1}
+            </div>
+            <div class="flex-1">
+              <h3 class="text-display-sm font-semibold text-ink-900 mb-3">{item.heading}</h3>
+              <p class="text-ink-500 leading-relaxed">{item.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Signature / closing -->
+  <section class="container-content py-24 md:py-32 text-center max-w-2xl mx-auto">
+    <div class="reveal">
+      <p class="text-ink-600 text-lg italic leading-relaxed text-pretty">
+        I speak from life experience and from the heart. I have a great passion for inspiring others with my story of overcoming adversity and achieving success.
+      </p>
+      <p class="mt-6 font-display text-xl text-ink-800">Motivational Speaker &amp; Mentor</p>
+    </div>
+  </section>
+
+  <CTABanner />
+</Layout>

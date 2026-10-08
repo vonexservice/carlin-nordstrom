@@ -1,0 +1,81 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTABanner from '../components/CTABanner.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Button from '../components/Button.astro';
+import { getCollection } from 'astro:content';
+
+const title = 'Keynotes';
+const description =
+  'Keynote presentations by Carlin Nordstrom — Indigenous leadership, athletic excellence, and corporate motivation for conferences and events across Canada.';
+
+const keynoteTopics = (await getCollection('keynotes')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<Layout title={title} description={description}>
+  <section class="bg-ink-900 text-cream-50">
+    <div class="container-content py-20 md:py-28">
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-ember-400 mb-4">
+        Keynote Speaking
+      </p>
+      <h1 class="text-display-lg font-semibold text-cream-50 text-balance">
+        Keynotes
+      </h1>
+      <p class="mt-6 text-xl text-ink-300 max-w-2xl text-pretty leading-relaxed">
+        Carlin speaks from life experience and from the heart. With a passion for empowering audiences, he connects on a personal level, addressing challenges and instilling confidence and purpose.
+      </p>
+    </div>
+  </section>
+
+  <section class="container-content py-24 md:py-32">
+    <div class="flex flex-col gap-20">
+      {keynoteTopics.map((k, i) => (
+        <div class={`reveal grid gap-12 lg:grid-cols-2 lg:gap-20 items-center ${i % 2 === 1 ? 'lg:[&>*:first-child]:order-2' : ''}`}>
+          <div>
+            <p class="text-sm font-semibold uppercase tracking-[0.15em] text-ember-600 mb-3">
+              Keynote {i + 1}
+            </p>
+            <h2 class="text-display-md font-semibold text-ink-900 mb-6 text-balance">
+              {k.data.title}
+            </h2>
+            <p class="text-ink-600 leading-relaxed text-pretty">
+              {k.data.description}
+            </p>
+            <ul class="mt-6 space-y-3">
+              {k.data.outcomes.map((outcome) => (
+                <li class="flex gap-3 items-start">
+                  <svg class="w-5 h-5 text-ember-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span class="text-ink-700">{outcome}</span>
+                </li>
+              ))}
+            </ul>
+            <div class="mt-8">
+              <Button href="/contact" variant="primary" size="md">
+                Book This Keynote
+              </Button>
+            </div>
+          </div>
+          <div>
+            <img
+              src="/images/carlin-keynote-stage.webp"
+              alt={`Carlin speaking on stage — ${k.data.title}`}
+              width="590"
+              height="390"
+              loading="lazy"
+              class="aspect-[4/3] w-full rounded-2xl object-cover"
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <CTABanner
+    title="Ready to Book Carlin for Your Event?"
+    subtitle="If your agency, company, or community wants to book Carlin for an inspiring keynote, get in touch to discuss your event goals and audience."
+  />
+</Layout>

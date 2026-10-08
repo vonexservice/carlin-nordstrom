@@ -1,0 +1,38 @@
+---
+export interface ImageWithPlaceholderProps {
+  src: any;
+  alt: string;
+  width?: number;
+  height?: number;
+  class?: string;
+  sizes?: string;
+  loading?: 'lazy' | 'eager';
+  widths?: number[];
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  class: className = '',
+  sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
+  loading = 'lazy',
+  widths = [400, 800, 1200],
+} = Astro.props as ImageWithPlaceholderProps;
+
+import { Image } from 'astro:assets';
+---
+
+<div class={`relative overflow-hidden rounded-2xl bg-ink-100 ${className}`}>
+  <Image
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    sizes={sizes}
+    widths={widths}
+    loading={loading}
+    class="h-full w-full object-cover"
+  />
+</div>

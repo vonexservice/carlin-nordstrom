@@ -1,0 +1,122 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTABanner from '../components/CTABanner.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Button from '../components/Button.astro';
+import { getGoogleReviews } from '../lib/googleReviews';
+import { getCollection } from 'astro:content';
+
+const title = 'Testimonials';
+const description =
+  'Testimonials from principals, students, and organizations who have experienced Carlin Nordstrom as a motivational speaker and workshop facilitator.';
+
+const testimonials = (await getCollection('testimonials'))
+  .filter((t) => !t.data.quote.startsWith('[PLACEHOLDER'))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const googleReviews = await getGoogleReviews();
+---
+
+<Layout title={title} description={description}>
+  <section class="bg-ink-900 text-cream-50">
+    <div class="container-content py-20 md:py-28">
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-ember-400 mb-4">
+        Client Testimonial & Student Impact
+      </p>
+      <h1 class="text-display-lg font-semibold text-cream-50 text-balance">
+        Key Takeaways on Carlin Nordstrom
+      </h1>
+    </div>
+  </section>
+
+  <!-- Intro text -->
+  <section class="container-content py-24 md:py-32 max-w-3xl">
+    <div class="reveal">
+      <h2 class="text-display-md font-semibold text-ink-900 mb-6">
+        Making an Impact has its rewards
+      </h2>
+      <p class="text-ink-600 leading-relaxed text-pretty">
+        But none as rewarding as the feedback of how peoples lives were affected because of the interaction that took place. Often times the gratitude comes years later as one recalls encouraging words that were spoken and received much earlier in ones life.
+      </p>
+      <p class="mt-4 text-ink-600 leading-relaxed text-pretty">
+        It's an incredibly rewarding experience that fills me with a profound sense of purpose and gratitude. Each story shared is a testament to the power of words and the potential to ignite positive change in people's lives. Knowing that my message resonated deeply enough to inspire action and transformation is nothing short of humbling. It reaffirms my belief in the boundless potential within each individual to overcome challenges, find their inner strength, and pursue their dreams.
+      </p>
+    </div>
+  </section>
+
+  <!-- Beacons of Light -->
+  <section class="bg-cream-200 py-24 md:py-32">
+    <div class="container-content max-w-3xl">
+      <div class="reveal">
+        <h2 class="text-display-md font-semibold text-ink-900 mb-6">
+          Beacons of Light
+        </h2>
+        <p class="text-ink-600 leading-relaxed text-pretty">
+          These testimonials serve as beacons of light, illuminating the path forward not just for those who share them, but for me as well. They are a constant reminder that, through the art of speaking and storytelling, we have the ability to create ripples of hope and motivation that can reach far beyond what we can imagine. This connection with my audience is a source of immeasurable joy, reinforcing my commitment to continue spreading positivity and empowerment through my words.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial cards -->
+  <section class="container-content py-24 md:py-32">
+    <SectionHeading
+      eyebrow="Client Testimonials"
+      title="What People Are Saying"
+      align="center"
+      class="reveal mb-16"
+    />
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {testimonials.map((t) => (
+        <div class="reveal rounded-2xl border border-ink-100 bg-cream-50 p-8">
+          <svg class="w-8 h-8 text-ember-300 mb-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+          </svg>
+          <p class="text-ink-500 leading-relaxed italic">
+            {t.data.quote}
+          </p>
+          <div class="mt-6 pt-6 border-t border-ink-100">
+            <p class="font-semibold text-ink-900">{t.data.author}</p>
+            <p class="text-sm text-ink-400">{t.data.role}{t.data.role && t.data.organization ? ' · ' : ''}{t.data.organization}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+    <!-- EDITOR NOTE: Add more real testimonials as markdown files in src/content/testimonials/. -->
+  </section>
+
+  {googleReviews && (
+    <section class="bg-ink-900 py-24 text-cream-50 md:py-32">
+      <div class="container-content">
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="text-sm font-semibold uppercase tracking-[0.2em] text-ember-400">Supporting proof</p>
+          <h2 class="mt-4 text-display-md font-semibold text-cream-50">Google Reviews</h2>
+          <p class="mt-4 text-ink-300">{googleReviews.rating.toFixed(1)} out of 5 stars from {googleReviews.userRatingCount.toLocaleString()} Google reviews.</p>
+        </div>
+        <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {googleReviews.reviews.map((review) => (
+            <article class="reveal rounded-2xl border border-ink-700 bg-ink-800 p-7">
+              <div class="flex items-center justify-between gap-4">
+                <span class="text-ember-400" aria-hidden="true">{'★'.repeat(Math.round(review.rating))}</span>
+                <span class="text-sm text-ink-300" aria-label={`${review.rating} out of 5 stars`}>{review.rating} out of 5 stars</span>
+              </div>
+              <p class="mt-5 text-ink-100 leading-relaxed">{review.text}</p>
+              <div class="mt-6 border-t border-ink-700 pt-5">
+                <p class="font-semibold text-cream-50">{review.authorName}</p>
+                <p class="mt-1 text-sm text-ink-300">{review.relativePublishTimeDescription}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+        <div class="mt-10 text-center">
+          <a href={googleReviews.googleMapsUri} target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-lg border border-ink-600 px-6 py-3 font-semibold text-cream-50 transition-colors hover:border-ember-400 hover:text-ember-400">
+            Read all reviews on Google
+          </a>
+          <p class="mt-4 text-sm text-ink-300">Powered by Google</p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <CTABanner />
+</Layout>

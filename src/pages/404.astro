@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = 'Page Not Found';
+const description = 'The page you are looking for could not be found.';
+---
+
+<Layout title={title} description={description} noindex={true}>
+  <section class="bg-ink-900 text-cream-50 min-h-[70vh] flex items-center">
+    <div class="container-content py-24">
+      <div class="max-w-2xl mx-auto text-center">
+        <p class="text-display-lg font-semibold text-ember-400 mb-4">404</p>
+        <h1 class="text-display-md font-semibold text-cream-50 text-balance mb-6">
+          Page Not Found
+        </h1>
+        <p class="text-lg text-ink-300 mb-10">
+          The page you're looking for doesn't exist or has been moved.
+        </p>
+        <a
+          href="/"
+          class="inline-flex items-center justify-center font-semibold rounded-lg bg-ember-600 text-cream-50 px-8 py-4 text-lg hover:bg-ember-700 transition-all duration-300"
+        >
+          Return Home
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

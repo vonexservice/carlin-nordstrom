@@ -1,0 +1,32 @@
+---
+import { site } from '../config/site';
+
+// Sticky bottom CTA bar visible on mobile only
+---
+
+<div
+  id="mobile-sticky-cta"
+  class="lg:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-ink-200 bg-cream/95 backdrop-blur-md px-4 py-3 shadow-[0_-4px_12px_rgba(0,0,0,0.08)]"
+>
+  <a
+    href={site.bookingHref}
+    class="flex items-center justify-center w-full rounded-lg bg-ember-600 px-6 py-3.5 text-base font-semibold text-cream-50 transition-colors hover:bg-ember-700 active:bg-ember-800"
+  >
+    Book Carlin
+  </a>
+</div>
+
+<script>
+  // Add bottom padding to body on mobile so sticky bar doesn't cover content
+  function adjustBodyPadding() {
+    const bar = document.getElementById('mobile-sticky-cta');
+    if (!bar) return;
+    if (window.innerWidth < 1024) {
+      document.body.style.paddingBottom = '5rem';
+    } else {
+      document.body.style.paddingBottom = '0';
+    }
+  }
+  adjustBodyPadding();
+  window.addEventListener('resize', adjustBodyPadding);
+</script>

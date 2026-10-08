@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* === Ink (deep charcoal/navy) === */
+    --color-ink: 18 24 38;
+    --color-ink-900: 7 12 24;
+    --color-ink-800: 15 24 43;
+    --color-ink-700: 28 42 70;
+    --color-ink-600: 54 70 101;
+    --color-ink-500: 86 103 135;
+    --color-ink-400: 126 143 173;
+    --color-ink-300: 171 185 208;
+    --color-ink-200: 207 216 231;
+    --color-ink-100: 229 234 242;
+    --color-ink-50: 244 247 251;
+
+    /* === Cream (warm off-white) === */
+    --color-cream: 250 251 253;
+    --color-cream-50: 255 255 255;
+    --color-cream-100: 250 251 253;
+    --color-cream-200: 235 239 245;
+
+    /* === Ember (brand blue — lighter, matched to the CN logo) === */
+    --color-ember: 59 130 246;
+    --color-ember-50: 239 246 255;
+    --color-ember-100: 219 234 254;
+    --color-ember-200: 191 219 254;
+    --color-ember-300: 147 197 253;
+    --color-ember-400: 96 165 250;
+    --color-ember-500: 59 130 246;
+    --color-ember-600: 37 99 235;
+    --color-ember-700: 29 78 216;
+    --color-ember-800: 30 64 175;
+    --color-ember-900: 30 58 138;
+
+    /* === Logo silver === */
+    --color-silver: 193 199 209;
+    --color-silver-50: 248 249 251;
+    --color-silver-100: 232 235 240;
+    --color-silver-200: 211 216 225;
+    --color-silver-300: 193 199 209;
+    --color-silver-400: 158 166 180;
+    --color-silver-500: 117 127 145;
+  }
+
+  * {
+    border-color: rgb(var(--color-ink-200));
+  }
+
+  html {
+    font-family: 'Inter Variable', system-ui, sans-serif;
+    background-color: rgb(var(--color-cream));
+    color: rgb(var(--color-ink-800));
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: rgb(var(--color-cream));
+    color: rgb(var(--color-ink-800));
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Fraunces Variable', Georgia, serif;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+
+  /* Visible focus states for accessibility */
+  :focus-visible {
+    outline: 2px solid rgb(var(--color-ember-500));
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img {
+    height: auto;
+  }
+}
+
+@layer components {
+  .container-content {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-content {
+      padding-inline: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-content {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -100%;
+    z-index: 100;
+    background: rgb(var(--color-ink-900));
+    color: rgb(var(--color-cream));
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: top 0.2s ease;
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+}
+
+@layer utilities {
+  /* Scroll-triggered fade/translate */
+  .reveal {
+    opacity: 0;
+    transform: translateY(1.5rem);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

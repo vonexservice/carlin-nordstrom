@@ -1,0 +1,50 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import CTABanner from '../../components/CTABanner.astro';
+import { provinces } from '../../data/speaking-provinces';
+
+const title = 'Where Carlin Speaks';
+const description =
+  'Carlin Nordstrom speaks at schools, communities, and organizations across Western and Central Canada, including Saskatchewan, Alberta, Manitoba, British Columbia, and Ontario.';
+---
+
+<Layout title={title} description={description}>
+  <section class="bg-ink-900 text-cream-50">
+    <div class="container-content py-20 md:py-28">
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-ember-400 mb-4">
+        Speaking Across Canada
+      </p>
+      <h1 class="text-display-lg font-semibold text-cream-50 text-balance">
+        Where Carlin Speaks
+      </h1>
+      <p class="mt-6 text-xl text-ink-300 max-w-2xl text-pretty leading-relaxed">
+        Carlin speaks to schools, First Nations communities, and organizations across Western and Central Canada.
+      </p>
+    </div>
+  </section>
+
+  <section class="container-content py-24 md:py-32">
+    <SectionHeading eyebrow="Service Areas" title="Select a Province" align="center" class="reveal mb-14" />
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {provinces.map((p) => (
+        <a
+          href={`/speaking/${p.slug}`}
+          class="reveal group rounded-2xl border border-ink-200 bg-cream-50 p-8 transition-all hover:-translate-y-1 hover:border-ember-300 hover:shadow-lg"
+        >
+          <h2 class="text-display-sm font-semibold text-ink-900 transition-colors group-hover:text-ember-700">
+            {p.name}
+          </h2>
+          <span class="mt-4 inline-block text-sm font-semibold uppercase tracking-[0.12em] text-ember-600">
+            Learn more &rarr;
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <CTABanner
+    title="Don't See Your Province Listed?"
+    subtitle="Carlin speaks across Canada. If you don't see your province listed, get in touch anyway — chances are good he can make it work."
+  />
+</Layout>

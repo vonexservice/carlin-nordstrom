@@ -1,0 +1,100 @@
+---
+import '../styles/globals.css';
+import { site } from '../config/site';
+import SEO from '../components/SEO.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SkipLink from '../components/SkipLink.astro';
+import MobileStickyCTA from '../components/MobileStickyCTA.astro';
+
+export interface LayoutProps {
+  title: string;
+  description: string;
+  canonical?: string;
+  image?: string;
+  noindex?: boolean;
+  type?: 'website' | 'article';
+  jsonLd?: Array<{ type: 'Person' | 'Organization' | 'FAQPage' | 'BlogPosting'; data: Record<string, any> }>;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  image,
+  noindex,
+  type,
+  jsonLd = [],
+} = Astro.props as LayoutProps;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <SEO
+      title={title}
+      description={description}
+      canonical={canonical}
+      image={image}
+      noindex={noindex}
+      type={type}
+    />
+
+    <!-- Font preloads — self-hosted variable fonts -->
+    <!-- Place font files in /public/fonts/ -->
+    <link
+      rel="preload"
+      href="/fonts/Fraunces[opsz,wght].woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/Inter[slnt,wght].woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- Font face declarations -->
+    <style is:global>
+      @font-face {
+        font-family: 'Fraunces Variable';
+        src: url('/fonts/Fraunces[opsz,wght].woff2') format('woff2-variations');
+        font-weight: 100 900;
+        font-display: swap;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'Inter Variable';
+        src: url('/fonts/Inter[slnt,wght].woff2') format('woff2-variations');
+        font-weight: 100 900;
+        font-display: swap;
+        font-style: normal;
+      }
+    </style>
+
+    <!-- JSON-LD structured data -->
+    {jsonLd.map((entry) => (
+      <script type="application/ld+json" set:html={JSON.stringify(entry)} />
+    ))}
+
+    <!-- Scroll reveal -->
+    <script>
+      import '../scripts/scroll-reveal.ts';
+    </script>
+  </head>
+
+  <body class="min-h-screen bg-cream text-ink-800 font-body antialiased">
+    <SkipLink />
+    <Header />
+
+    <main id="main-content" class="min-h-[60vh]">
+      <slot />
+    </main>
+
+    <Footer />
+    <MobileStickyCTA />
+  </body>
+</html>

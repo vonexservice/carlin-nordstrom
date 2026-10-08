@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTABanner from '../components/CTABanner.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Button from '../components/Button.astro';
+
+const title = 'Kisik Youth Wellness';
+const description =
+  'Kisik Youth Wellness — founded by Carlin Nordstrom, supporting Indigenous youth through wellness programs, mentorship, and community engagement.';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Kisik Youth Wellness',
+    founder: { '@type': 'Person', name: 'Carlin Nordstrom' },
+    description: 'Youth wellness organization founded by Carlin Nordstrom, supporting Indigenous youth through wellness programs, mentorship, and community engagement.',
+  },
+];
+---
+
+<Layout title={title} description={description} jsonLd={jsonLd}>
+  <section class="bg-cream-50">
+    <div class="container-content py-20 md:py-28">
+      <img
+        src="/images/kisik-youth-wellness-logo.webp"
+        alt="Kisik Youth Wellness"
+        width="320"
+        height="125"
+        class="mb-6 h-20 w-auto object-contain"
+      />
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-ember-600 mb-4">
+        Youth Wellness
+      </p>
+      <h1 class="text-display-lg font-semibold text-ink-900 text-balance">
+        Kisik Youth Wellness
+      </h1>
+      <p class="mt-6 text-xl text-ink-600 max-w-2xl text-pretty leading-relaxed">
+        Founded by Carlin Nordstrom, Kisik Youth Wellness is dedicated to supporting Indigenous youth through wellness programs, mentorship, and community engagement.
+      </p>
+    </div>
+  </section>
+
+  <section class="container-content py-24 md:py-32">
+    <div class="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center">
+      <div class="reveal">
+        <SectionHeading
+          eyebrow="Our Mission"
+          title="Empowering the Next Generation"
+        />
+        <p class="mt-6 text-ink-600 leading-relaxed text-pretty">
+          Kisik Youth Wellness has run youth wellness and land-based camps for 10 years. The work centres on mentorship, leadership, confidence, healthy living and community — giving Indigenous youth the tools and support to thrive.
+        </p>
+        <p class="mt-4 text-ink-600 leading-relaxed">
+          As KISIK Youth Camp Leader and Director, Carlin brings years of experience working directly with Indigenous youth, combining his background as a professional athlete with his cultural heritage to create meaningful wellness programming.
+        </p>
+      </div>
+      <div class="reveal">
+        <img
+          src="/images/kisik-land-based-hunt.webp"
+          alt="Youth with a harvest from a Kisik Youth Wellness land-based camp"
+          width="2000"
+          height="1500"
+          loading="lazy"
+          class="aspect-[4/3] w-full rounded-2xl object-cover"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- EDITOR NOTE: Add a "Programs" section here once specific program names/descriptions
+       are supplied by Carlin (e.g. specific camps, age groups, locations). -->
+
+  <CTABanner
+    title="Get Involved with Kisik Youth Wellness"
+    subtitle="If your school, agency, or community wants to bring Kisik Youth Wellness programming to your students, get in touch to discuss availability."
+    label="Get in Touch"
+  />
+</Layout>

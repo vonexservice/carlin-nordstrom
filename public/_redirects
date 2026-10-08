@@ -1,0 +1,9 @@
+# === 301 Redirects ===
+# Add permanent redirects here as needed.
+# Format: /old-path  /new-path  301
+# Examples:
+# /speaking  /keynotes  301
+# /youth  /kisik-youth-wellness  301
+
+# === Netlify 404 fallback ===
+/*  /404.html  404

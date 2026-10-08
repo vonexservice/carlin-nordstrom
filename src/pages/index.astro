@@ -1,0 +1,402 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../config/site';
+import Button from '../components/Button.astro';
+
+import SectionHeading from '../components/SectionHeading.astro';
+import { getCollection } from 'astro:content';
+import { getGoogleReviews } from '../lib/googleReviews';
+
+const posts = await getCollection('blog', ({ data }) => !data.draft).then((items) =>
+  items.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
+);
+const googleReviews = await getGoogleReviews();
+const showNextShift = true;
+
+const keynoteTopics = [
+  { title: 'Lead by Example', text: 'Being the teammate and leader others can count on. Suited to: team performance, leadership, accountability.' },
+  { title: 'Build Belief', text: 'Setting goals, building confidence and taking responsibility for your own path. Suited to: personal responsibility, workplace culture.' },
+  { title: 'Persevere & Adapt', text: "Learning from setbacks, responding to change and continuing forward when things don't go as planned. Suited to: resilience, change." },
+  { title: 'Help Others Succeed', text: '"Your success is not my failure." Suited to: collaboration, supporting others, building high-performing teams.' },
+];
+
+const bookingSteps = [
+  { number: '01', title: 'Submit an Inquiry', text: 'Tell us about your organization, event and audience.' },
+  { number: '02', title: 'Discuss Your Event', text: 'Carlin will discuss the event goals, audience, theme, date and requirements.' },
+  { number: '03', title: 'Customize the Presentation', text: "The keynote or presentation is aligned with your organization's goals and audience." },
+  { number: '04', title: 'Confirm & Prepare', text: 'Finalize the engagement and prepare for the event.' },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: site.name,
+    url: site.url,
+    description: site.description,
+    jobTitle: 'Indigenous Motivational & Keynote Speaker',
+    knowsAbout: [
+      'Indigenous leadership',
+      'Motivational speaking',
+      'Keynote speaking',
+      'Youth mental health and wellness',
+      'Corporate leadership development',
+    ],
+    areaServed: ['Saskatchewan', 'Alberta', 'Manitoba', 'British Columbia', 'Ontario'].map((name) => ({
+      '@type': 'AdministrativeArea',
+      name: `${name}, Canada`,
+    })),
+  },
+];
+---
+
+<Layout title={site.name} description={site.description} jsonLd={jsonLd}>
+  <!-- 1. Hero -->
+  <section class="relative overflow-hidden bg-ink-900 text-cream-50">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(31,74,168,0.35),transparent_35%)]"></div>
+    <div class="container-content relative grid min-h-[650px] items-center gap-8 py-16 md:min-h-[730px] md:grid-cols-[1.05fr_0.95fr] md:py-20">
+      <div class="relative z-10 max-w-3xl animate-fade-up">
+        <p class="mb-5 text-sm font-semibold uppercase tracking-[0.2em] text-ember-400">
+          Indigenous Motivational &amp; Keynote Speaker
+        </p>
+        <h1 class="text-display-xl font-semibold uppercase tracking-tight text-cream-50 text-balance">
+          Carlin Nordstrom
+        </h1>
+        <p class="mt-6 max-w-2xl text-xl leading-relaxed text-ink-300 text-pretty">
+          Former Professional Hockey Player<br />
+          Founder of Kisik Youth Wellness and Kisik Pathways to Success
+        </p>
+        <div class="mt-10 flex flex-col gap-4 sm:flex-row">
+          <Button href={site.bookingHref} variant="primary" size="lg">Book Carlin to Speak</Button>
+          <Button href="/keynotes" variant="outline" size="lg" class="border-ink-600 text-cream-50 hover:border-ember-400 hover:text-ember-400">
+            Explore Keynote Topics
+          </Button>
+        </div>
+      </div>
+      <div class="relative flex min-h-[420px] items-end justify-center self-end md:min-h-[600px]">
+        <div class="absolute bottom-0 h-72 w-72 rounded-full bg-ember-600/20 blur-3xl md:h-[30rem] md:w-[30rem]"></div>
+        <img src="/images/Carlin-pointing-left.png" alt="Carlin Nordstrom pointing toward the future" width="2022" height="2253" loading="eager" fetchpriority="high" class="relative z-10 max-h-[560px] w-auto object-contain object-bottom drop-shadow-[0_24px_24px_rgba(0,0,0,0.35)] md:max-h-[650px]" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Credibility strip -->
+  <section class="border-b border-ink-200 bg-cream-50">
+    <div class="container-content grid gap-6 py-8 text-center sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
+      {['Professional Hockey', '10 Years Youth Wellness & Land-Based Camps', 'Presentations Across 5 Provinces', 'Pathways to Success: Year 5'].map((item) => (
+        <p class="text-sm font-semibold uppercase tracking-[0.12em] text-ink-700">{item}</p>
+      ))}
+    </div>
+  </section>
+
+  <!-- 3. Carlin's story -->
+  <section class="container-content py-24 md:py-32">
+    <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+      <div class="reveal">
+        <SectionHeading eyebrow="Carlin's Story" title="Transforming Struggle to Success" />
+        <div class="mt-6 space-y-4 text-lg leading-relaxed text-ink-600 text-pretty">
+          <p>I speak from life experience and from the heart. I have a great passion for inspiring others with my story of overcoming adversity and achieving success.</p>
+          <p>I'm a member of the Poundmaker First Nation. I grew up in Warman, Saskatchewan playing in their minor hockey system, battling through racism as the only First Nations player on my team.</p>
+          <p>From the Saskatchewan Junior hockey league to a scholarship to Western Michigan University and NCAA Division 1 Hockey, I was promoted to assistant captain followed by a 4 year professional hockey career, the highlight being 2 games with the Ottawa Senators.</p>
+        </div>
+      </div>
+      <div class="reveal flex items-end justify-center overflow-hidden rounded-2xl bg-ink-900">
+        <img src="/images/carlin-arms-crossed.png" alt="Carlin Nordstrom standing with his arms crossed" width="1515" height="2055" loading="lazy" class="max-h-[600px] w-full object-contain object-bottom" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Leadership & Corporate Keynotes -->
+  <section class="bg-ink-900 py-24 text-cream-50 md:py-32">
+    <div class="container-content">
+      <SectionHeading eyebrow="Leadership & Corporate Keynotes" title="Practical belief, resilience, and leadership" subtitle="Carlin brings the lessons of professional hockey, leadership, perseverance and community leadership into practical keynote presentations for today's teams and organizations." class="reveal mb-14" />
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {keynoteTopics.map((topic) => (
+          <article class="reveal rounded-2xl border border-ink-700 bg-ink-800 p-7">
+            <h2 class="text-display-sm font-semibold text-cream-50">{topic.title}</h2>
+            <p class="mt-4 text-sm leading-relaxed text-ink-300">{topic.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Who Carlin Speaks To -->
+  <section class="container-content py-24 md:py-32">
+    <div class="mx-auto max-w-4xl text-center reveal">
+      <SectionHeading eyebrow="Who Carlin Speaks To" title="Audiences ready to move forward" align="center" />
+      <p class="mt-6 text-lg leading-relaxed text-ink-600">Carlin speaks to Indigenous and community audiences and to corporate and professional audiences.</p>
+      <ul class="mx-auto mt-8 grid max-w-3xl gap-3 text-left text-ink-700 sm:grid-cols-2">
+        {['Corporate organizations', 'Leadership teams', 'Conferences', 'Industry associations', 'Government organizations', 'First Nations organizations', 'Schools and school divisions', 'Universities and colleges', 'Youth organizations', 'Community organizations', 'Sports organizations', 'Employee and professional development events'].map((audience) => (
+          <li class="flex gap-3"><span class="text-ember-600" aria-hidden="true">&#10003;</span>{audience}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 5b. Why Choose Carlin -->
+  <section class="bg-cream-200 py-24 md:py-32">
+    <div class="container-content">
+      <SectionHeading eyebrow="Why Choose Carlin" title="Experience, personalization, and accountability" align="center" class="reveal mb-14" />
+      <div class="grid gap-8 md:grid-cols-3">
+        <article class="reveal rounded-2xl border border-ink-200 bg-cream-50 p-8">
+          <h2 class="text-xl font-semibold text-ink-900">Experience &amp; Expertise</h2>
+          <p class="mt-4 text-sm leading-relaxed text-ink-600">Four years of professional hockey, including two games with the Ottawa Senators, after an NCAA Division 1 career at Western Michigan where he was an assistant captain. Carlin has led youth wellness and land-based camps, founded Kisik Pathways to Success, and presented across five provinces.</p>
+        </article>
+        <article class="reveal rounded-2xl border border-ink-200 bg-cream-50 p-8">
+          <h2 class="text-xl font-semibold text-ink-900">Personalized Approach</h2>
+          <p class="mt-4 text-sm leading-relaxed text-ink-600">No two audiences are the same. Before every event, Carlin talks with you about your goals, theme, audience and requirements so the message fits your group.</p>
+        </article>
+        <article class="reveal rounded-2xl border border-ink-200 bg-cream-50 p-8">
+          <h2 class="text-xl font-semibold text-ink-900">Support &amp; Accountability</h2>
+          <p class="mt-4 text-sm leading-relaxed text-ink-600">Carlin has been the teammate and the captain, and he talks about both. He works with you through preparation and promotion.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Kisik Youth Wellness -->
+  <section class="bg-cream-200 py-24 md:py-32">
+    <div class="container-content grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+      <div class="reveal">
+        <p class="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-ember-600">Founder</p>
+        <h2 class="text-display-md font-semibold text-ink-900">Kisik Youth Wellness</h2>
+        <p class="mt-6 text-lg leading-relaxed text-ink-600">Carlin founded Kisik Youth Wellness, which has run youth wellness and land-based camps for 10 years. The work centres on mentorship, leadership, confidence, healthy living and community.</p>
+        <div class="mt-8"><Button href="/kisik-youth-wellness" variant="outline">Learn About Kisik Youth Wellness</Button></div>
+      </div>
+      <div class="reveal rounded-2xl bg-ink-900 p-10 text-cream-50">
+        <p class="text-5xl font-semibold text-ember-400">10</p>
+        <p class="mt-3 text-xl font-semibold">Years Youth Wellness &amp; Land-Based Camps</p>
+        <p class="mt-4 text-ink-300">[PLACEHOLDER: camp details, locations, participants, to be supplied by Carlin]</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Kisik Pathways to Success -->
+  <section class="container-content py-24 md:py-32">
+    <div class="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+      <div class="reveal order-2 flex justify-center lg:order-1">
+        <img src="/images/Carlin-pointing-left.png" alt="Carlin Nordstrom pointing to the left" width="2022" height="2253" loading="lazy" class="max-h-[520px] w-auto object-contain" />
+      </div>
+      <div class="reveal order-1 lg:order-2">
+        <p class="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-ember-600">Founder</p>
+        <h2 class="text-display-md font-semibold text-ink-900">Kisik Pathways to Success</h2>
+        <p class="mt-6 text-lg leading-relaxed text-ink-600">Carlin founded Kisik Pathways to Success, now in its fifth year. It focuses on career and leadership development and connects youth with opportunity through industry leaders.</p>
+        <p class="mt-5 text-ink-600">Kisik Pathways to Success works with Nutrien, SaskPower and Cameco.</p>
+        <p class="mt-4 text-ink-500">[PLACEHOLDER: program details, to be supplied by Carlin]</p>
+        <div class="mt-8"><Button href="/pathways-to-success" variant="primary">Learn About Pathways to Success</Button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Speaking Across Canada -->
+  <section class="bg-ink-900 py-24 text-cream-50 md:py-32">
+    <div class="container-content text-center">
+      <SectionHeading eyebrow="Speaking Across Canada" title="Five provinces. One message of belief." align="center" class="reveal" />
+      <div class="mx-auto mt-12 grid max-w-4xl gap-4 sm:grid-cols-2 md:grid-cols-5">
+        {[
+          { name: 'Saskatchewan', slug: 'saskatchewan' },
+          { name: 'Alberta', slug: 'alberta' },
+          { name: 'Manitoba', slug: 'manitoba' },
+          { name: 'British Columbia', slug: 'british-columbia' },
+          { name: 'Ontario', slug: 'ontario' },
+        ].map((province) => (
+          <a href={`/speaking/${province.slug}`} class="reveal flex flex-col items-center gap-3 rounded-xl border border-ink-700 bg-ink-800 px-4 py-6 transition-colors hover:border-ember-400">
+            <svg class="h-6 w-6 text-ember-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 21s-7-7.58-7-12.5A7 7 0 0 1 19 8.5C19 13.42 12 21 12 21z" />
+              <circle cx="12" cy="8.5" r="2.5" />
+            </svg>
+            <span class="text-sm font-semibold leading-tight text-cream-50">{province.name}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Keynote topics preview -->
+  <section class="container-content py-24 md:py-32">
+    <SectionHeading eyebrow="Keynote Topics" title="Bring a message that moves people forward" align="center" class="reveal mb-14" />
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      {keynoteTopics.map((topic) => (
+        <a href="/keynotes" class="reveal group rounded-2xl border border-ink-200 bg-cream-50 p-7 transition-all hover:-translate-y-1 hover:border-ember-300 hover:shadow-lg">
+          <h2 class="text-display-sm font-semibold text-ink-900 transition-colors group-hover:text-ember-700">{topic.title}</h2>
+          <span class="mt-6 inline-block text-sm font-semibold uppercase tracking-[0.12em] text-ember-600">Explore topics &rarr;</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- 10. Testimonials -->
+  <section class="bg-cream-200 py-24 md:py-32">
+    <div class="container-content">
+      <SectionHeading eyebrow="Testimonials" title="What people are saying" align="center" class="reveal mb-8" />
+      {googleReviews && (
+        <a href={googleReviews.googleMapsUri} class="mx-auto mb-12 flex w-fit items-center gap-3 rounded-full border border-ink-200 bg-cream-50 px-5 py-3 text-sm font-semibold text-ink-700 transition-colors hover:border-ember-300 hover:text-ember-700" target="_blank" rel="noopener noreferrer">
+          <span class="text-ember-600" aria-hidden="true">★</span>
+          <span>{googleReviews.rating.toFixed(1)} on Google · {googleReviews.userRatingCount.toLocaleString()} reviews</span>
+          <span class="sr-only">Read all reviews on Google</span>
+        </a>
+      )}
+      <div class="space-y-8">
+        <article class="reveal rounded-2xl border border-ink-200 bg-cream-50 p-8">
+          <p class="text-sm font-semibold uppercase tracking-[0.15em] text-ember-600">Youth &amp; Education</p>
+          <div class="mt-6 space-y-8">
+            <div>
+              <p class="text-lg italic leading-relaxed text-ink-700">"Carlin delivered his speech to our entire student population of over 400 students ranging from grades 9-12. Carlin discussed the great challenges he faced and how perseverance and work ethic led to his success. Carlin's message of being an indigenous athlete was impactful to our student population where nearly half of our students identify as FNMI."</p>
+              <p class="mt-4 border-t border-ink-200 pt-4 text-sm font-semibold text-ink-900">Principal Samear Abougouche, J.A. Williams High School</p>
+            </div>
+            <div>
+              <p class="text-lg italic leading-relaxed text-ink-700">"It is very difficult to find presenters who can speak to such a diverse age group and still make an impact. [...] Mr. Carlin Nordstrom will be a game changer for any facility he might visit."</p>
+              <p class="mt-4 border-t border-ink-200 pt-4 text-sm font-semibold text-ink-900">Principal Shaun Sasakamoose, Ahtahkakoop School</p>
+            </div>
+          </div>
+        </article>
+        <!-- EDITOR NOTE: Add "Community" and "Leadership & Organizations" testimonial
+             articles here once real quotes are available, matching the pattern above. -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. Your Next Shift -->
+  {showNextShift && (
+  <section class="container-content py-24 md:py-32">
+    <div class="mx-auto max-w-3xl rounded-3xl border border-ink-200 bg-ink-900 p-10 text-center text-cream-50 md:p-16">
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-ember-400">Your Next Shift</p>
+      <h2 class="mt-4 text-display-md font-semibold text-cream-50">Coming soon</h2>
+      <p class="mt-5 text-ink-300">Carlin is writing a book, Your Next Shift. Details coming soon.</p>
+    </div>
+  </section>
+  )}
+
+  <!-- 12. How to Book Carlin -->
+  <section class="bg-cream-200 py-24 md:py-32">
+    <div class="container-content">
+      <SectionHeading eyebrow="How to Book Carlin" title="A clear path from first conversation to event day" align="center" class="reveal mb-14" />
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        {bookingSteps.map((step) => (
+          <article class="reveal">
+            <p class="text-4xl font-semibold text-ember-600">{step.number}</p>
+            <h2 class="mt-5 text-xl font-semibold text-ink-900">{step.title}</h2>
+            <p class="mt-3 text-sm leading-relaxed text-ink-600">{step.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog preview -->
+  <section class="container-content py-20">
+    <div class="flex flex-col justify-between gap-5 border-b border-ink-200 pb-6 md:flex-row md:items-end">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-ember-600">From the Blog</p>
+        <h2 class="mt-2 text-display-sm font-semibold text-ink-900">Inspiring reads from the blog</h2>
+      </div>
+      <a href="/blog" class="text-sm font-semibold text-ember-700">View all posts &rarr;</a>
+    </div>
+    <div class="grid gap-6 pt-8 md:grid-cols-3">
+      {posts.map((post) => (
+        <a href={`/blog/${post.slug}`} class="group reveal rounded-2xl border border-ink-200 bg-cream-50 p-6 transition-all hover:-translate-y-1 hover:border-ember-300 hover:shadow-md">
+          <time class="text-sm text-ink-500" datetime={post.data.publishDate.toISOString()}>{post.data.publishDate.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })}</time>
+          <h3 class="mt-3 text-xl font-semibold text-ink-900 group-hover:text-ember-700">{post.data.title}</h3>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- 13. Final CTA with Booking Form -->
+  <section class="bg-ink-900 py-24 text-cream-50 md:py-32">
+    <div class="container-content grid gap-12 lg:grid-cols-2 lg:gap-20">
+      <div class="reveal">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-ember-400">Book Carlin to Speak</p>
+        <h2 class="mt-4 text-display-md font-semibold text-cream-50">Bring Carlin to your event</h2>
+        <p class="mt-6 text-lg leading-relaxed text-ink-300">Tell us about your organization, event and audience.</p>
+        <p class="mt-8 text-sm text-ink-300">Prefer to call? <a href={`tel:${site.phone}`} class="font-semibold text-ember-400 hover:text-ember-300">{site.phoneDisplay}</a></p>
+      </div>
+      <div class="reveal rounded-2xl bg-cream-50 p-8 text-ink-900 md:p-10">
+        <form name="booking-inquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?success=true" class="space-y-5">
+          <p class="hidden" aria-hidden="true">
+            <label for="bot-field">Don't fill this out if you're human:</label>
+            <input id="bot-field" name="bot-field" type="text" tabindex="-1" autocomplete="off" />
+          </p>
+          <input type="hidden" name="form-name" value="booking-inquiry" />
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="name" class="mb-1.5 block text-sm font-semibold">Name</label>
+              <input id="name" name="name" type="text" required class="w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm focus:border-ember-500 focus:outline-none focus:ring-1 focus:ring-ember-500" />
+            </div>
+            <div>
+              <label for="organization" class="mb-1.5 block text-sm font-semibold">Organization</label>
+              <input id="organization" name="organization" type="text" required class="w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm focus:border-ember-500 focus:outline-none focus:ring-1 focus:ring-ember-500" />
+            </div>
+          </div>
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="email" class="mb-1.5 block text-sm font-semibold">Email</label>
+              <input id="email" name="email" type="email" required class="w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm focus:border-ember-500 focus:outline-none focus:ring-1 focus:ring-ember-500" />
+            </div>
+            <div>
+              <label for="phone" class="mb-1.5 block text-sm font-semibold">Phone</label>
+              <input id="phone" name="phone" type="tel" class="w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm focus:border-ember-500 focus:outline-none focus:ring-1 focus:ring-ember-500" />
+            </div>
+          </div>
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="event-type" class="mb-1.5 block text-sm font-semibold">Event Type</label>
+              <select id="event-type" name="event-type" required class="w-full rounded-lg border border-ink-200 bg-cream-50 px-4 py-2.5 text-sm focus:border-ember-500 focus:outline-none focus:ring-1 focus:ring-ember-500">
+                <option value="">Select an event type</option>
+                <option value="Keynote">Keynote</option>
+                <option value="Workshop">Workshop</option>
+                <option value="School presentation">School presentation</option>
+                <option value="Conference">Conference</option>
+                <option value="Community event">Community event</option>
+                <option value="Corporate event">Corporate event</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="event-date" class="mb-1.5 block text-sm font-semibold">Event Date</label>
+              <input id="event-date" name="event-date" type="date" class="w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm focus:border-ember-500 focus:outline-none focus:ring-1 focus:ring-ember-500" />
+            </div>
+          </div>
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="location" class="mb-1.5 block text-sm font-semibold">Location</label>
+              <input id="location" name="location" type="text" class="w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm focus:border-ember-500 focus:outline-none focus:ring-1 focus:ring-ember-500" />
+            </div>
+            <div>
+              <label for="audience" class="mb-1.5 block text-sm font-semibold">Audience</label>
+              <input id="audience" name="audience" type="text" class="w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm focus:border-ember-500 focus:outline-none focus:ring-1 focus:ring-ember-500" />
+            </div>
+          </div>
+          <div>
+            <label for="audience-size" class="mb-1.5 block text-sm font-semibold">Estimated Audience Size</label>
+            <input id="audience-size" name="audience-size" type="text" class="w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm focus:border-ember-500 focus:outline-none focus:ring-1 focus:ring-ember-500" />
+          </div>
+          <div>
+            <label for="topic" class="mb-1.5 block text-sm font-semibold">Speaking Topic / Goals</label>
+            <textarea id="topic" name="topic" rows="3" class="w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm focus:border-ember-500 focus:outline-none focus:ring-1 focus:ring-ember-500"></textarea>
+          </div>
+          <div>
+            <label for="budget" class="mb-1.5 block text-sm font-semibold">Budget (optional)</label>
+            <input id="budget" name="budget" type="text" class="w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm focus:border-ember-500 focus:outline-none focus:ring-1 focus:ring-ember-500" />
+          </div>
+          <div>
+            <label for="additional-info" class="mb-1.5 block text-sm font-semibold">Additional Information</label>
+            <textarea id="additional-info" name="additional-info" rows="3" class="w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm focus:border-ember-500 focus:outline-none focus:ring-1 focus:ring-ember-500"></textarea>
+          </div>
+          <button type="submit" class="w-full rounded-lg bg-ember-600 px-6 py-3.5 text-base font-semibold text-cream-50 transition-colors hover:bg-ember-700 focus:outline-none focus:ring-2 focus:ring-ember-500 focus:ring-offset-2">Request Speaking Information</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  {Astro.url.searchParams.get('success') === 'true' && (
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-ink-900/80 p-4" role="dialog" aria-modal="true" aria-labelledby="success-title">
+    <div class="max-w-md rounded-2xl bg-cream-50 p-8 text-center">
+      <h2 id="success-title" class="text-xl font-semibold text-ink-900">Thank you for your inquiry</h2>
+      <p class="mt-3 text-sm text-ink-600">Carlin will be in touch with you soon to discuss your event.</p>
+      <a href="/" class="mt-6 inline-block rounded-lg bg-ember-600 px-6 py-2.5 text-sm font-semibold text-cream-50 hover:bg-ember-700">Close</a>
+    </div>
+  </div>
+  )}
+</Layout>

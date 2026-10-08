@@ -1,0 +1,37 @@
+---
+export interface SectionHeadingProps {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  align?: 'left' | 'center';
+  as?: 'h2' | 'h3';
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  subtitle,
+  align = 'left',
+  as: Tag = 'h2',
+  class: className = '',
+} = Astro.props as SectionHeadingProps;
+
+const alignClass = align === 'center' ? 'text-center items-center' : 'text-left items-start';
+---
+
+<div class={`flex flex-col gap-3 ${alignClass} ${className}`}>
+  {eyebrow && (
+    <span class="text-sm font-semibold uppercase tracking-[0.15em] text-ember-600">
+      {eyebrow}
+    </span>
+  )}
+  <Tag class="text-display-sm font-semibold text-ink-900 text-balance">
+    {title}
+  </Tag>
+  {subtitle && (
+    <p class="text-lg text-ink-500 max-w-2xl text-pretty leading-relaxed">
+      {subtitle}
+    </p>
+  )}
+</div>

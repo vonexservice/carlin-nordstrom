@@ -12,6 +12,28 @@ const description =
 const keynoteTopics = (await getCollection('keynotes')).sort(
   (a, b) => a.data.order - b.data.order
 );
+
+const keynotePhotos: Record<string, { src: string; alt: string; width: number; height: number }> = {
+  'Overcoming Adversity': {
+    src: '/images/carlin-keynote-stage.webp',
+    alt: 'Carlin speaking on stage — Overcoming Adversity',
+    width: 590,
+    height: 390,
+  },
+  "Navigating Life's Challenges with Confidence": {
+    src: '/images/carlin-gym-assembly.webp',
+    alt: "Carlin speaking to a full assembly — Navigating Life's Challenges with Confidence",
+    width: 843,
+    height: 632,
+  },
+  'Unlocking Your Inner Strength': {
+    src: '/images/kisik-presentation.webp',
+    alt: 'Carlin presenting his hockey journey — Unlocking Your Inner Strength',
+    width: 1500,
+    height: 2000,
+  },
+};
+const fallbackKeynotePhoto = keynotePhotos['Overcoming Adversity'];
 ---
 
 <Layout title={title} description={description}>
@@ -61,10 +83,10 @@ const keynoteTopics = (await getCollection('keynotes')).sort(
           </div>
           <div>
             <img
-              src="/images/carlin-keynote-stage.webp"
-              alt={`Carlin speaking on stage — ${k.data.title}`}
-              width="590"
-              height="390"
+              src={(keynotePhotos[k.data.title] ?? fallbackKeynotePhoto).src}
+              alt={(keynotePhotos[k.data.title] ?? fallbackKeynotePhoto).alt}
+              width={(keynotePhotos[k.data.title] ?? fallbackKeynotePhoto).width}
+              height={(keynotePhotos[k.data.title] ?? fallbackKeynotePhoto).height}
               loading="lazy"
               class="aspect-[4/3] w-full rounded-2xl object-cover"
             />

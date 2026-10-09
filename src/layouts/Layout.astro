@@ -1,7 +1,5 @@
 ---
 import '../styles/globals.css';
-import '@fontsource-variable/fraunces';
-import '@fontsource-variable/inter';
 import { site } from '../config/site';
 import SEO from '../components/SEO.astro';
 import Header from '../components/Header.astro';
@@ -42,7 +40,40 @@ const {
       type={type}
     />
 
-    <!-- Self-hosted variable fonts via Fontsource (imported in frontmatter below) -->
+    <!-- Font preloads — self-hosted variable fonts -->
+    <!-- Place font files in /public/fonts/ -->
+    <link
+      rel="preload"
+      href="/fonts/Fraunces[opsz,wght].woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/Inter[slnt,wght].woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- Font face declarations -->
+    <style is:global>
+      @font-face {
+        font-family: 'Fraunces Variable';
+        src: url('/fonts/Fraunces[opsz,wght].woff2') format('woff2-variations');
+        font-weight: 100 900;
+        font-display: swap;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'Inter Variable';
+        src: url('/fonts/Inter[slnt,wght].woff2') format('woff2-variations');
+        font-weight: 100 900;
+        font-display: swap;
+        font-style: normal;
+      }
+    </style>
 
     <!-- JSON-LD structured data -->
     {jsonLd.map((entry) => (

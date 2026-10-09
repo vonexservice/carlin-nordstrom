@@ -74,12 +74,12 @@ const programs = [
       </div>
       <div class="reveal">
         <img
-          src="/images/kisik-land-based-hunt.webp"
-          alt="Youth with a harvest from a Kisik Youth Wellness land-based camp"
-          width="2000"
-          height="1500"
+          src="/images/kisik-gallery/deer-hunting.webp"
+          alt="Youth deer hunting on a Kisik Youth Wellness land-based camp"
+          width="800"
+          height="550"
           loading="lazy"
-          class="aspect-[4/3] w-full rounded-2xl object-cover"
+          class="aspect-[4/3] w-full rounded-2xl bg-ink-100 object-contain"
         />
       </div>
     </div>
@@ -104,6 +104,55 @@ const programs = [
     </div>
   </section>
 
+  <section class="container-content py-24 md:py-32">
+    <SectionHeading
+      eyebrow="Life at Camp"
+      title="Fishing, Hunting, and Outdoor Recreation"
+      align="center"
+      class="reveal mb-14"
+    />
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {[
+        { src: '/images/kisik-gallery/ice-fishing.webp', alt: 'Youth ice fishing on a Kisik Youth Wellness land-based camp' },
+        { src: '/images/kisik-gallery/fishing.webp', alt: 'Youth fishing on a Kisik Youth Wellness land-based camp' },
+        { src: '/images/kisik-gallery/moose-hunting.webp', alt: 'Youth moose hunting on a Kisik Youth Wellness land-based camp' },
+        { src: '/images/kisik-gallery/boating-outdoors.webp', alt: 'Youth boating and enjoying the outdoors at a Kisik Youth Wellness camp' },
+      ].map((photo) => (
+        <img
+          src={photo.src}
+          alt={photo.alt}
+          width="800"
+          height="550"
+          loading="lazy"
+          class="reveal aspect-[4/3] w-full rounded-2xl bg-ink-100 object-contain"
+        />
+      ))}
+    </div>
+  </section>
+
+  <section class="container-content py-16">
+    <div class="reveal text-center">
+      <SectionHeading eyebrow="Our Sponsors" title="Supported By" align="center" class="mb-10" />
+      <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
+        {[
+          { name: 'SaskPower', logo: '/images/sponsors/saskpower.webp', width: 817, height: 213 },
+          { name: 'K+S', logo: '/images/sponsors/ks.webp', width: 738, height: 252 },
+          { name: 'Nutrien', logo: '/images/sponsors/nutrien.webp', width: 435, height: 92 },
+          { name: 'Cameco', logo: '/images/sponsors/cameco.webp', width: 482, height: 350 },
+        ].map((sponsor) => (
+          <img
+            src={sponsor.logo}
+            alt={sponsor.name}
+            width={sponsor.width}
+            height={sponsor.height}
+            loading="lazy"
+            class="h-12 w-auto object-contain"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
   <section class="container-content py-24 md:py-32 max-w-3xl text-center">
     <div class="reveal">
       <SectionHeading eyebrow="What Parents Say" title="Real impact, in their own words" align="center" class="mb-8" />
@@ -117,18 +166,34 @@ const programs = [
     <div class="container-content">
       <SectionHeading
         eyebrow="In Action"
-        title="Kisik Youth Wellness in Action"
+        title="Confidence-Building and Mentorship"
         align="center"
         class="reveal mb-14"
       />
-      <div class="grid gap-6 sm:grid-cols-2">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <img
+          src="/images/kisik-gallery/confidence-activity.webp"
+          alt="A Kisik Youth Wellness confidence-building activity"
+          width="800"
+          height="550"
+          loading="lazy"
+          class="reveal aspect-[4/3] w-full rounded-2xl bg-cream-50 object-contain"
+        />
+        <img
+          src="/images/kisik-gallery/youth-mentorship.webp"
+          alt="Carlin leading a youth discussion and mentorship session at Kisik Youth Wellness"
+          width="800"
+          height="550"
+          loading="lazy"
+          class="reveal aspect-[4/3] w-full rounded-2xl bg-cream-50 object-contain"
+        />
         <img
           src="/images/kisik-hockey-development.webp"
           alt="Carlin coaching youth through Kisik Hockey Development"
           width="1080"
           height="1075"
           loading="lazy"
-          class="reveal aspect-square w-full rounded-2xl object-cover"
+          class="reveal aspect-[4/3] w-full rounded-2xl bg-cream-50 object-contain"
         />
         <img
           src="/images/kisik-presentation.webp"
@@ -136,7 +201,7 @@ const programs = [
           width="1500"
           height="2000"
           loading="lazy"
-          class="reveal aspect-square w-full rounded-2xl object-cover"
+          class="reveal aspect-[4/3] w-full rounded-2xl bg-cream-50 object-contain"
         />
       </div>
     </div>

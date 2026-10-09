@@ -5,13 +5,17 @@ import Button from '../components/Button.astro';
 
 import SectionHeading from '../components/SectionHeading.astro';
 import { getCollection } from 'astro:content';
-import { getGoogleReviews } from '../lib/googleReviews';
 
 const posts = await getCollection('blog', ({ data }) => !data.draft).then((items) =>
   items.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
 );
 const keynotes = (await getCollection('keynotes')).sort((a, b) => a.data.order - b.data.order);
-const googleReviews = await getGoogleReviews();
+const sponsors = [
+  { name: 'SaskPower', logo: '/images/sponsors/saskpower.webp', width: 817, height: 213 },
+  { name: 'K+S', logo: '/images/sponsors/ks.webp', width: 738, height: 252 },
+  { name: 'Nutrien', logo: '/images/sponsors/nutrien.webp', width: 435, height: 92 },
+  { name: 'Cameco', logo: '/images/sponsors/cameco.webp', width: 482, height: 350 },
+];
 const showNextShift = true;
 
 const keynoteTopics = [
@@ -183,8 +187,19 @@ const jsonLd = [
         <p class="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-ember-600">Founder</p>
         <h2 class="text-display-md font-semibold text-ink-900">Kisik Pathways to Success</h2>
         <p class="mt-6 text-lg leading-relaxed text-ink-600">Carlin founded Kisik Pathways to Success, now in its fifth year. It focuses on career and leadership development and connects youth with opportunity through industry leaders.</p>
-        <p class="mt-5 text-ink-600">Kisik Pathways to Success works with Nutrien, SaskPower and Cameco.</p>
-        <p class="mt-4 text-ink-500">[PLACEHOLDER: program details, to be supplied by Carlin]</p>
+        <p class="mt-5 text-ink-600">Kisik Pathways to Success works with SaskPower, K+S, Nutrien and Cameco.</p>
+        <div class="mt-6 flex flex-wrap items-center gap-x-8 gap-y-4">
+          {sponsors.map((sponsor) => (
+            <img
+              src={sponsor.logo}
+              alt={sponsor.name}
+              width={sponsor.width}
+              height={sponsor.height}
+              loading="lazy"
+              class="h-8 w-auto object-contain"
+            />
+          ))}
+        </div>
         <div class="mt-8"><Button href="/pathways-to-success" variant="primary">Learn About Pathways to Success</Button></div>
       </div>
     </div>
@@ -225,37 +240,6 @@ const jsonLd = [
           <span class="mt-6 inline-block text-sm font-semibold uppercase tracking-[0.12em] text-ember-600">Explore keynotes &rarr;</span>
         </a>
       ))}
-    </div>
-  </section>
-
-  <!-- 10. Testimonials -->
-  <section class="bg-cream-200 py-24 md:py-32">
-    <div class="container-content">
-      <SectionHeading eyebrow="Testimonials" title="What people are saying" align="center" class="reveal mb-8" />
-      {googleReviews && (
-        <a href={googleReviews.googleMapsUri} class="mx-auto mb-12 flex w-fit items-center gap-3 rounded-full border border-ink-200 bg-cream-50 px-5 py-3 text-sm font-semibold text-ink-700 transition-colors hover:border-ember-300 hover:text-ember-700" target="_blank" rel="noopener noreferrer">
-          <span class="text-ember-600" aria-hidden="true">★</span>
-          <span>{googleReviews.rating.toFixed(1)} on Google · {googleReviews.userRatingCount.toLocaleString()} reviews</span>
-          <span class="sr-only">Read all reviews on Google</span>
-        </a>
-      )}
-      <div class="space-y-8">
-        <article class="reveal rounded-2xl border border-ink-200 bg-cream-50 p-8">
-          <p class="text-sm font-semibold uppercase tracking-[0.15em] text-ember-600">Youth &amp; Education</p>
-          <div class="mt-6 space-y-8">
-            <div>
-              <p class="text-lg italic leading-relaxed text-ink-700">"Carlin delivered his speech to our entire student population of over 400 students ranging from grades 9-12. Carlin discussed the great challenges he faced and how perseverance and work ethic led to his success. Carlin's message of being an indigenous athlete was impactful to our student population where nearly half of our students identify as FNMI."</p>
-              <p class="mt-4 border-t border-ink-200 pt-4 text-sm font-semibold text-ink-900">Principal Samear Abougouche, J.A. Williams High School</p>
-            </div>
-            <div>
-              <p class="text-lg italic leading-relaxed text-ink-700">"It is very difficult to find presenters who can speak to such a diverse age group and still make an impact. [...] Mr. Carlin Nordstrom will be a game changer for any facility he might visit."</p>
-              <p class="mt-4 border-t border-ink-200 pt-4 text-sm font-semibold text-ink-900">Principal Shaun Sasakamoose, Ahtahkakoop School</p>
-            </div>
-          </div>
-        </article>
-        <!-- EDITOR NOTE: Add "Community" and "Leadership & Organizations" testimonial
-             articles here once real quotes are available, matching the pattern above. -->
-      </div>
     </div>
   </section>
 
@@ -390,6 +374,29 @@ const jsonLd = [
           </div>
           <button type="submit" class="w-full rounded-lg bg-ember-600 px-6 py-3.5 text-base font-semibold text-cream-50 transition-colors hover:bg-ember-700 focus:outline-none focus:ring-2 focus:ring-ember-500 focus:ring-offset-2">Request Speaking Information</button>
         </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sponsors marquee -->
+  <section class="border-t border-ink-100 bg-cream-100 py-16">
+    <div class="container-content">
+      <p class="text-center text-sm font-semibold uppercase tracking-[0.2em] text-ink-400">
+        Companies that have sponsored Carlin's Keynotes and Initiatives
+      </p>
+      <div class="group relative mt-10 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+        <div class="flex w-max animate-marquee items-center gap-16 group-hover:[animation-play-state:paused]">
+          {[...sponsors, ...sponsors].map((sponsor) => (
+            <img
+              src={sponsor.logo}
+              alt={sponsor.name}
+              width={sponsor.width}
+              height={sponsor.height}
+              loading="lazy"
+              class="h-10 w-auto object-contain grayscale opacity-70 transition-all hover:grayscale-0 hover:opacity-100"
+            />
+          ))}
+        </div>
       </div>
     </div>
   </section>

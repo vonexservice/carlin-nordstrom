@@ -160,6 +160,10 @@
     scroll-behavior: auto !important;
   }
 
+  .animate-marquee {
+    animation: none !important;
+  }
+
   .reveal {
     opacity: 1 !important;
     transform: none !important;

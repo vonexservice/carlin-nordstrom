@@ -41,6 +41,7 @@ export const site: SiteConfig = {
     { label: 'Kisik Youth Wellness', href: '/kisik-youth-wellness' },
     { label: 'Pathways to Success', href: '/pathways-to-success' },
     { label: 'Testimonials', href: '/testimonials' },
+    { label: 'Blog', href: '/blog' },
     { label: 'Contact', href: '/contact' },
   ],
   footerNav: [

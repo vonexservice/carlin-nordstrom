@@ -12,6 +12,7 @@ const posts = await getCollection('blog', ({ data }) => !data.draft).then((items
 );
 const keynotes = (await getCollection('keynotes')).sort((a, b) => a.data.order - b.data.order);
 const googleReviews = await getGoogleReviews();
+const sponsors = ['SaskPower', 'K+S', 'Nutrien', 'Cameco'];
 const showNextShift = true;
 
 const keynoteTopics = [
@@ -390,6 +391,24 @@ const jsonLd = [
           </div>
           <button type="submit" class="w-full rounded-lg bg-ember-600 px-6 py-3.5 text-base font-semibold text-cream-50 transition-colors hover:bg-ember-700 focus:outline-none focus:ring-2 focus:ring-ember-500 focus:ring-offset-2">Request Speaking Information</button>
         </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sponsors marquee -->
+  <section class="border-t border-ink-100 bg-cream-100 py-16">
+    <div class="container-content">
+      <p class="text-center text-sm font-semibold uppercase tracking-[0.2em] text-ink-400">
+        Companies that have sponsored Carlin's Keynotes and Initiatives
+      </p>
+      <div class="group relative mt-10 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+        <div class="flex w-max animate-marquee gap-16 group-hover:[animation-play-state:paused]">
+          {[...sponsors, ...sponsors].map((sponsor) => (
+            <span class="flex items-center text-xl font-semibold tracking-tight text-ink-400">
+              {sponsor}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   </section>

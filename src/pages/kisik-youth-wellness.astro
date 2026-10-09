@@ -104,6 +104,17 @@ const programs = [
     </div>
   </section>
 
+  <section class="container-content py-16">
+    <div class="reveal text-center">
+      <SectionHeading eyebrow="Our Sponsors" title="Supported By" align="center" class="mb-10" />
+      <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
+        {['SaskPower', 'K+S', 'Nutrien', 'Cameco'].map((sponsor) => (
+          <span class="text-xl font-semibold tracking-tight text-ink-500">{sponsor}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <section class="container-content py-24 md:py-32 max-w-3xl text-center">
     <div class="reveal">
       <SectionHeading eyebrow="What Parents Say" title="Real impact, in their own words" align="center" class="mb-8" />

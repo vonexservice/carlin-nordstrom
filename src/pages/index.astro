@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SponsorLogos from '../components/SponsorLogos.astro';
 import { site } from '../config/site';
 import Button from '../components/Button.astro';
 
@@ -7,12 +8,6 @@ import SectionHeading from '../components/SectionHeading.astro';
 import { getCollection } from 'astro:content';
 
 const keynotes = (await getCollection('keynotes')).sort((a, b) => a.data.order - b.data.order);
-const sponsors = [
-  { name: 'SaskPower', logo: '/images/sponsors/saskpower.webp', width: 416, height: 76 },
-  { name: 'K+S', logo: '/images/sponsors/ks.webp', width: 738, height: 252 },
-  { name: 'Nutrien', logo: '/images/sponsors/nutrien.webp', width: 451, height: 108 },
-  { name: 'Cameco', logo: '/images/sponsors/cameco.webp', width: 950, height: 686 },
-];
 const showNextShift = true;
 
 const keynoteTopics = [
@@ -208,17 +203,8 @@ const jsonLd = [
         <h2 class="text-display-md font-semibold text-ink-900">Kisik Pathways to Success</h2>
         <p class="mt-6 text-lg leading-relaxed text-ink-600">Carlin founded Kisik Pathways to Success, now in its fifth year. It focuses on career and leadership development and connects youth with opportunity through industry leaders.</p>
         <p class="mt-5 text-ink-600">Kisik Pathways to Success works with SaskPower, K+S, Nutrien and Cameco.</p>
-        <div class="mt-6 flex flex-wrap items-center gap-x-8 gap-y-4">
-          {sponsors.map((sponsor) => (
-            <img
-              src={sponsor.logo}
-              alt={sponsor.name}
-              width={sponsor.width}
-              height={sponsor.height}
-              loading="lazy"
-              class="h-8 w-auto object-contain"
-            />
-          ))}
+        <div class="mt-6 flex flex-wrap items-center gap-x-8 gap-y-5">
+          <SponsorLogos scale={0.7} />
         </div>
         <div class="mt-8"><Button href="/pathways-to-success" variant="primary">Learn About Pathways to Success</Button></div>
       </div>
@@ -387,17 +373,9 @@ const jsonLd = [
         Companies that have sponsored Carlin's Keynotes and Initiatives
       </p>
       <div class="group relative mt-10 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-        <div class="flex w-max animate-marquee items-center gap-16 group-hover:[animation-play-state:paused]">
-          {[...sponsors, ...sponsors].map((sponsor) => (
-            <img
-              src={sponsor.logo}
-              alt={sponsor.name}
-              width={sponsor.width}
-              height={sponsor.height}
-              loading="lazy"
-              class="h-10 w-auto object-contain grayscale opacity-70 transition-all hover:grayscale-0 hover:opacity-100"
-            />
-          ))}
+        <div class="flex w-max animate-marquee items-center gap-20 group-hover:[animation-play-state:paused]">
+          <SponsorLogos imgClass="opacity-90 transition-opacity hover:opacity-100" />
+          <SponsorLogos imgClass="opacity-90 transition-opacity hover:opacity-100" decorative />
         </div>
       </div>
     </div>

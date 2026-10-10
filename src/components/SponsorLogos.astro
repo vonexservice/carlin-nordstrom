@@ -1,0 +1,33 @@
+---
+// Renders sponsor logo <img> tags with balanced sizes (see src/data/sponsors.ts).
+// Renders only the images, so callers control the wrapping layout.
+import { sponsors as allSponsors, sponsorsByName, type Sponsor } from '../data/sponsors';
+
+export interface Props {
+  /** Limit to these sponsors, in this order. Defaults to all. */
+  only?: string[];
+  /** Multiplier on each logo's display height. */
+  scale?: number;
+  /** Extra classes for each <img>. */
+  imgClass?: string;
+  /** Hide from screen readers (used for the duplicate copy in a marquee). */
+  decorative?: boolean;
+}
+
+const { only, scale = 1, imgClass = '', decorative = false } = Astro.props;
+const list: Sponsor[] = only ? sponsorsByName(only) : allSponsors;
+---
+
+{list.map((s) => (
+  <img
+    src={s.logo}
+    alt={decorative ? '' : s.name}
+    aria-hidden={decorative ? 'true' : undefined}
+    width={s.fileWidth}
+    height={s.fileHeight}
+    loading="lazy"
+    decoding="async"
+    style={`--logo-h:${Math.round(s.height * scale)}px`}
+    class={`h-[calc(var(--logo-h)*0.8)] w-auto shrink-0 object-contain md:h-[var(--logo-h)] ${imgClass}`}
+  />
+))}

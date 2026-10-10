@@ -1,7 +1,7 @@
 ---
 export interface ButtonProps {
   href?: string;
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'outline' | 'outline-light' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   class?: string;
   [key: string]: any;
@@ -25,6 +25,10 @@ const variants = {
     'bg-ink-900 text-cream-50 hover:bg-ink-800 shadow-sm hover:shadow-md',
   outline:
     'border-2 border-ink-300 text-ink-800 hover:border-ember-500 hover:text-ember-700',
+  // For dark backgrounds. A separate variant, because adding text-cream-50
+  // on top of `outline` loses to text-ink-800 and leaves dark text on dark.
+  'outline-light':
+    'border-2 border-ink-600 text-cream-50 hover:border-ember-400 hover:text-ember-400',
   ghost:
     'text-ink-700 hover:text-ember-700 hover:bg-ember-50',
 };

@@ -6,13 +6,17 @@ import Button from '../components/Button.astro';
 import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
 import { getCollection } from 'astro:content';
 
-const title = 'Workshops';
+const title = 'Youth & Community Workshops';
 const description =
-  'Interactive workshops by Carlin Nordstrom — Health & Wellness, Lateral Violence, and Warrior Spirit workshops designed for Indigenous youth and communities.';
+  'Interactive workshops by Carlin Nordstrom — Health & Wellness, Lateral Violence, Warrior Spirit, and RISE UP — for youth, schools, and communities across Canada.';
 
 const workshops = (await getCollection('workshops')).sort(
   (a, b) => a.data.order - b.data.order
 );
+
+const relatedBlogPost: Record<string, string> = {
+  'Lateral Violence': '/blog/understanding-lateral-violence',
+};
 
 const workshopPhotos: Record<string, { src: string; alt: string; width: number; height: number }> = {
   'Health & Wellness': {
@@ -40,19 +44,46 @@ const workshopPhotos: Record<string, { src: string; alt: string; width: number; 
     height: 960,
   },
 };
+
+const howItWorks = [
+  { number: '01', title: 'Tell us about your group', text: 'Share your audience, goals, location, and preferred date.' },
+  { number: '02', title: 'Choose or customize a workshop', text: "Carlin adapts the session to your participants and objectives." },
+  { number: '03', title: 'Confirm the details', text: 'Finalize format, length, location, and requirements.' },
+  { number: '04', title: 'Host the workshop', text: 'Carlin delivers an engaging, interactive session for your group.' },
+];
+
+const faqs = [
+  { q: 'How long does a workshop run?', a: 'Most workshops run half-day or full-day and can be shortened or extended depending on your schedule. RISE UP runs over two days.' },
+  { q: 'What group size works best?', a: 'Workshops are designed for classroom-to-assembly-sized groups and can be adapted for smaller or larger audiences — ask about your specific group.' },
+  { q: 'Does Carlin travel, or offer virtual sessions?', a: 'Carlin is Saskatchewan-based and travels across Canada for in-person workshops. Reach out to discuss virtual options for your group.' },
+  { q: 'Can a workshop be customized?', a: "Yes — Carlin discusses your group's goals, age range, and context before the session to tailor the content." },
+  { q: 'How far in advance should we book?', a: 'Earlier is better, especially for the 2026–27 school year RISE UP program, but reach out even for shorter-notice requests.' },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} jsonLd={jsonLd.map((data) => ({ type: 'FAQPage', data }))}>
   <section class="bg-ink-900 text-cream-50">
     <div class="container-content py-20 md:py-28">
       <p class="text-sm font-semibold uppercase tracking-[0.2em] text-ember-400 mb-4">
-        My Workshops
+        Interactive Workshops for Youth, Schools &amp; Communities
       </p>
       <h1 class="text-display-lg font-semibold text-cream-50 text-balance">
-        Workshops
+        Youth &amp; Community Workshops
       </h1>
       <p class="mt-6 text-xl text-ink-300 max-w-2xl text-pretty leading-relaxed">
-        With a passion for empowering young minds, through engaging talks and interactive sessions, I'm able to connect with youth on a personal level, addressing challenges and instilling confidence and purpose.
+        Carlin facilitates practical, engaging workshops that help participants build confidence, resilience, healthy habits, and stronger relationships. Each session can be tailored to your group's age, goals, and community context.
       </p>
     </div>
   </section>
@@ -65,9 +96,12 @@ const workshopPhotos: Record<string, { src: string; alt: string; width: number; 
             <p class="text-sm font-semibold uppercase tracking-[0.15em] text-ember-600 mb-3">
               Workshop {i + 1}
             </p>
-            <h2 class="text-display-md font-semibold text-ink-900 mb-6 text-balance">
+            <h2 class="text-display-md font-semibold text-ink-900 mb-4 text-balance">
               {w.data.title}
             </h2>
+            {w.data.audience && (
+              <p class="mb-5 text-sm font-semibold text-ink-500">Best for: <span class="text-ink-700">{w.data.audience}</span></p>
+            )}
             <div class="text-ink-600 leading-relaxed space-y-4">
               {w.data.description.startsWith('[PLACEHOLDER') ? (
                 <p class="text-ink-400 italic">Full description coming soon.</p>
@@ -75,6 +109,9 @@ const workshopPhotos: Record<string, { src: string; alt: string; width: number; 
                 w.data.description.split('\n\n').map((para) => <p>{para}</p>)
               )}
             </div>
+            {w.data.duration && (
+              <p class="mt-5 text-sm text-ink-500"><span class="font-semibold text-ink-700">Format:</span> {w.data.duration}{w.data.format === 'in-person' ? '; in-person' : w.data.format === 'virtual' ? '; virtual' : '; in-person or virtual'}.</p>
+            )}
             {w.data.outcomes.length > 0 && (
               <ul class="mt-6 space-y-3">
                 {w.data.outcomes.map((outcome) => (
@@ -87,10 +124,15 @@ const workshopPhotos: Record<string, { src: string; alt: string; width: number; 
                 ))}
               </ul>
             )}
-            <div class="mt-8">
+            <div class="mt-8 flex flex-wrap gap-4">
               <Button href="/contact" variant="primary" size="md">
-                Book This Workshop
+                Request This Workshop
               </Button>
+              {relatedBlogPost[w.data.title] && (
+                <Button href={relatedBlogPost[w.data.title]} variant="outline" size="md">
+                  Read the related article
+                </Button>
+              )}
             </div>
           </div>
           <div>
@@ -112,8 +154,48 @@ const workshopPhotos: Record<string, { src: string; alt: string; width: number; 
     </div>
   </section>
 
+  <!-- How It Works -->
+  <section class="bg-cream-200 py-24 md:py-32">
+    <div class="container-content">
+      <SectionHeading eyebrow="How It Works" title="From inquiry to workshop day" align="center" class="reveal mb-14" />
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        {howItWorks.map((step) => (
+          <article class="reveal">
+            <p class="text-4xl font-semibold text-ember-600">{step.number}</p>
+            <h2 class="mt-5 text-xl font-semibold text-ink-900">{step.title}</h2>
+            <p class="mt-3 text-sm leading-relaxed text-ink-600">{step.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial -->
+  <section class="container-content py-24 md:py-32">
+    <div class="mx-auto max-w-3xl reveal text-center">
+      <p class="text-xl leading-relaxed text-ink-700 text-pretty">"It is very difficult to find presenters who can speak to such a diverse age group and still make an impact. [...] Mr. Carlin Nordstrom will be a game changer for any facility he might visit."</p>
+      <p class="mt-6 font-semibold text-ink-900">Shaun Sasakamoose, Principal — Ahtahkakoop School</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="bg-cream-200 py-24 md:py-32">
+    <div class="container-content">
+      <SectionHeading eyebrow="Common Questions" title="Frequently asked questions" align="center" class="reveal mb-14" />
+      <div class="mx-auto max-w-3xl divide-y divide-ink-300">
+        {faqs.map((faq) => (
+          <div class="reveal py-6">
+            <h3 class="text-lg font-semibold text-ink-900">{faq.q}</h3>
+            <p class="mt-2 text-ink-600 leading-relaxed">{faq.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <CTABanner
     title="Bring a Workshop to Your Community"
-    subtitle="If your school, agency, or community organization wants to host one of these workshops, get in touch to discuss availability and customization."
+    subtitle="Tell us about your school, agency, or community organization, and we'll help you choose or customize the right session."
+    label="Request Workshop Information"
   />
 </Layout>

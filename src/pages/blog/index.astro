@@ -1,26 +1,44 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import CTABanner from '../../components/CTABanner.astro';
 import { getCollection } from 'astro:content';
 
-const title = 'Blog';
+const title = 'Blog — Resilience, Leadership & Indigenous Wellness';
 const description =
-  'Insights and stories from Carlin Nordstrom — Indigenous leadership, motivation, hockey, youth development, and corporate keynote speaking.';
+  'Insights and stories from Carlin Nordstrom — Indigenous leadership, resilience, youth development, and corporate keynote speaking.';
 
-const posts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()
+);
+
+function readTime(body: string) {
+  const words = body.trim().split(/\s+/).length;
+  return Math.max(1, Math.round(words / 200));
+}
+
+const categories = ['All', ...Array.from(new Set(posts.flatMap((p) => p.data.tags)))];
 ---
 
 <Layout title={title} description={description}>
   <section class="bg-ink-900 text-cream-50">
     <div class="container-content py-20 md:py-28">
       <p class="text-sm font-semibold uppercase tracking-[0.2em] text-ember-400 mb-4">
-        Insights on Leadership &amp; Resilience
+        Insights on Resilience, Leadership &amp; Community
       </p>
       <h1 class="text-display-lg font-semibold text-cream-50 text-balance">
         Blog
       </h1>
       <p class="mt-6 text-xl text-ink-300 max-w-2xl text-pretty leading-relaxed">
-        Perspectives on Indigenous leadership, resilience, and personal growth from Carlin Nordstrom — an Indigenous motivational speaker and keynote speaker working with schools, communities, and organizations across Canada.
+        Practical reflections from Carlin Nordstrom on overcoming adversity, building confidence, leadership, Indigenous wellness, and supporting youth and communities.
       </p>
+    </div>
+  </section>
+
+  <section class="border-b border-ink-100 bg-cream-50">
+    <div class="container-content flex flex-wrap gap-2 py-6">
+      {categories.map((cat) => (
+        <span class="rounded-full border border-ink-200 px-4 py-1.5 text-sm font-medium text-ink-600">{cat}</span>
+      ))}
     </div>
   </section>
 
@@ -31,22 +49,37 @@ const posts = await getCollection('blog', ({ data }) => !data.draft);
           <article class="reveal">
             <a
               href={`/blog/${post.slug}`}
-              class="group block rounded-2xl border border-ink-100 bg-cream-50 p-6 transition-all duration-300 hover:shadow-lg hover:border-ember-200"
+              class="group block overflow-hidden rounded-2xl border border-ink-100 bg-cream-50 transition-all duration-300 hover:shadow-lg hover:border-ember-200"
             >
-              {post.data.tags.length > 0 && (
-                <p class="text-sm font-semibold uppercase tracking-[0.1em] text-ember-600">
-                  {post.data.tags[0]}
+              <div class="aspect-[16/10] w-full bg-ink-100">
+                <img
+                  src={post.data.image ?? '/og-default.jpg'}
+                  alt={post.data.title}
+                  width="640"
+                  height="400"
+                  loading="lazy"
+                  class="h-full w-full object-cover"
+                />
+              </div>
+              <div class="p-6">
+                {post.data.tags.length > 0 && (
+                  <p class="text-sm font-semibold uppercase tracking-[0.1em] text-ember-600">
+                    {post.data.tags[0]}
+                  </p>
+                )}
+                <h2 class="mt-3 text-display-sm font-semibold text-ink-900 group-hover:text-ember-700 transition-colors">
+                  {post.data.title}
+                </h2>
+                <p class="mt-2 text-sm text-ink-400">
+                  {post.data.publishDate.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' })} · {readTime(post.body)} min read
                 </p>
-              )}
-              <h2 class="mt-3 text-display-sm font-semibold text-ink-900 group-hover:text-ember-700 transition-colors">
-                {post.data.title}
-              </h2>
-              <p class="mt-3 text-ink-500 leading-relaxed">
-                {post.data.description.startsWith('[PLACEHOLDER') ? 'Full post coming soon.' : post.data.description}
-              </p>
-              <span class="mt-4 inline-block text-sm font-semibold text-ember-600">
-                Read more &rarr;
-              </span>
+                <p class="mt-3 text-ink-500 leading-relaxed">
+                  {post.data.description}
+                </p>
+                <span class="mt-4 inline-block text-sm font-semibold text-ember-600">
+                  Read article &rarr;
+                </span>
+              </div>
             </a>
           </article>
         ))}
@@ -54,12 +87,18 @@ const posts = await getCollection('blog', ({ data }) => !data.draft);
     ) : (
       <div class="max-w-2xl mx-auto text-center">
         <h2 class="text-display-md font-semibold text-ink-900 mb-6">
-          Content coming in Phase 2
+          New posts coming soon
         </h2>
         <p class="text-lg text-ink-500 leading-relaxed">
-          [PLACEHOLDER: blog posts will be added in Phase 2. Add Markdown files to src/content/blog/ to populate this page.]
+          Check back soon for new articles on leadership, resilience, and Indigenous wellness.
         </p>
       </div>
     )}
   </section>
+
+  <CTABanner
+    title="Bring These Messages to Your Audience"
+    subtitle="Carlin turns these ideas into engaging keynotes and workshops for schools, communities, and organizations."
+    label="Request Booking Information"
+  />
 </Layout>

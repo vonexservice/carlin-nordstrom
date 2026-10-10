@@ -4,6 +4,7 @@ export interface CTABannerProps {
   subtitle?: string;
   href?: string;
   label?: string;
+  showOneSheet?: boolean;
 }
 
 import { site } from '../config/site';
@@ -13,7 +14,8 @@ const {
   title = 'Ready to Inspire Your Audience?',
   subtitle = 'If your agency, company, or community wants to book Carlin for an inspiring motivational speech or workshop, get in touch today.',
   href = site.bookingHref,
-  label = 'Book Carlin',
+  label = 'Check Speaking Availability',
+  showOneSheet = false,
 } = Astro.props as CTABannerProps;
 ---
 
@@ -26,9 +28,16 @@ const {
       <p class="text-lg text-ink-300 leading-relaxed text-pretty">
         {subtitle}
       </p>
-      <Button href={href} variant="primary" size="lg" class="mt-4">
-        {label}
-      </Button>
+      <div class="mt-4 flex flex-col gap-4 sm:flex-row">
+        <Button href={href} variant="primary" size="lg">
+          {label}
+        </Button>
+        {showOneSheet && (
+          <Button href="/carlin-nordstrom-speaker-one-sheet.pdf" variant="outline" size="lg" class="border-ink-600 text-cream-50 hover:border-ember-400 hover:text-ember-400">
+            Download Speaker One-Sheet
+          </Button>
+        )}
+      </div>
     </div>
   </div>
 </section>

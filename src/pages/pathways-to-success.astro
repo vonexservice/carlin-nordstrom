@@ -4,9 +4,9 @@ import CTABanner from '../components/CTABanner.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import Button from '../components/Button.astro';
 
-const title = 'Pathways to Success';
+const title = 'Kisik Pathways to Success';
 const description =
-  'Kisik Pathways to Success — founded by Carlin Nordstrom, empowering Indigenous communities through leadership and success programs.';
+  'Kisik Pathways to Success — founded by Carlin Nordstrom, helping Indigenous youth build leadership skills, set goals, and connect with industry mentors.';
 
 const jsonLd = [
   {
@@ -14,38 +14,101 @@ const jsonLd = [
     '@type': 'Organization',
     name: 'Kisik Pathways to Success',
     founder: { '@type': 'Person', name: 'Carlin Nordstrom' },
-    description: 'Leadership and success program founded by Carlin Nordstrom, empowering Indigenous communities through leadership development and goal-setting.',
+    description: 'Leadership and career-development program founded by Carlin Nordstrom, connecting Indigenous youth with industry mentors and practical goal-setting.',
+    areaServed: { '@type': 'AdministrativeArea', name: 'Saskatchewan, Canada' },
   },
 ];
+
+const pillars = [
+  {
+    title: 'Leadership Development',
+    text: 'Youth build confidence, communication skills, accountability, and the ability to lead by example in school, work, and community settings.',
+  },
+  {
+    title: 'Goal-Setting & Personal Growth',
+    text: 'Participants identify their strengths, define meaningful goals, and create practical next steps toward education, training, employment, or entrepreneurship.',
+  },
+  {
+    title: 'Career Exposure & Mentorship',
+    text: 'Youth connect with professionals and industry leaders to learn about career paths, workplace expectations, and the steps needed to pursue opportunities.',
+  },
+  {
+    title: 'Teamwork & Community',
+    text: 'Sessions emphasize collaboration, respect, and supporting others — helping participants understand that individual success and community success go together.',
+  },
+];
+
+const partners = [
+  { name: 'Nutrien', logo: '/images/sponsors/nutrien.webp', width: 435, height: 92 },
+  { name: 'SaskPower', logo: '/images/sponsors/saskpower.webp', width: 817, height: 213 },
+  { name: 'Cameco', logo: '/images/sponsors/cameco.webp', width: 482, height: 350 },
+];
+
+const getInvolved = [
+  {
+    title: 'For Communities and Schools',
+    text: 'Bring Pathways to Success to your community or school.',
+    cta: 'Request Program Information',
+  },
+  {
+    title: 'For Employers and Industry Partners',
+    text: 'Support youth career development by becoming a mentor, host, or program partner.',
+    cta: 'Become a Partner',
+  },
+  {
+    title: 'For Youth and Families',
+    text: 'Learn about upcoming Pathways programs and how to participate.',
+    cta: 'Get Program Updates',
+  },
+];
+
+const faqs = [
+  { q: 'Who can participate in Kisik Pathways to Success?', a: 'The program is designed for Indigenous youth interested in building leadership skills and exploring career and education opportunities — reach out to confirm fit for your group.' },
+  { q: 'How long does the program run?', a: "Program length varies by community and partnership — Carlin will discuss format and timeline for your group when you get in touch." },
+  { q: 'Is there a cost to participate?', a: 'Kisik Pathways to Success is run in partnership with industry sponsors. Contact us to discuss costs and funding options for your community.' },
+  { q: 'How can employers get involved?', a: 'Employers can support the program as a mentor, site host for career exposure visits, or program partner — see "Become a Partner" below.' },
+  { q: 'Where does the program operate?', a: 'Kisik Pathways to Success is based in Saskatchewan and works with communities and partners across the province.' },
+];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
 ---
 
-<Layout title={title} description={description} jsonLd={jsonLd}>
+<Layout title={title} description={description} jsonLd={[...jsonLd, { type: 'FAQPage', data: faqJsonLd }]}>
   <section class="bg-ink-900 text-cream-50">
     <div class="container-content py-20 md:py-28">
       <p class="text-sm font-semibold uppercase tracking-[0.2em] text-ember-400 mb-4">
-        Leadership & Success
+        Leadership &amp; Career Development
       </p>
       <h1 class="text-display-lg font-semibold text-cream-50 text-balance">
-        Pathways to Success
+        Kisik Pathways to Success
       </h1>
       <p class="mt-6 text-xl text-ink-300 max-w-2xl text-pretty leading-relaxed">
-        Founded by Carlin Nordstrom, Kisik Pathways to Success empowers Indigenous communities through leadership development, goal-setting, and practical strategies for achieving success.
+        Founded by Carlin Nordstrom, Pathways to Success helps young people build leadership skills, connect with industry mentors, and create a clear plan for their future.
       </p>
     </div>
   </section>
 
+  <!-- Our Approach -->
   <section class="container-content py-24 md:py-32">
     <div class="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center">
       <div class="reveal">
         <SectionHeading
           eyebrow="Our Approach"
-          title="Creating Lasting Results"
+          title="A Practical Path From Goals to Opportunity"
         />
         <p class="mt-6 text-ink-600 leading-relaxed text-pretty">
-          Now in its fifth year, Kisik Pathways to Success focuses on career and leadership development, connecting youth with opportunity through industry leaders. The program works with Nutrien, SaskPower and Cameco to open real doors for participants.
+          Kisik Pathways to Success combines mentorship, leadership development, and career exposure to help Indigenous youth move from ideas to action. Participants explore their strengths, set meaningful goals, learn from industry leaders, and build practical plans for education, employment, and community leadership.
         </p>
         <p class="mt-4 text-ink-600 leading-relaxed">
-          Drawing from his own journey — from battling racism in minor hockey to reaching the professional ranks and the Ottawa Senators — Carlin teaches the principles of focus, leadership, and perseverance that turned his dreams into reality.
+          Now in its fifth year, the program connects youth with opportunities and role models across sectors including energy, resources, and community leadership — drawing on Carlin's own journey from minor hockey through the professional ranks.
         </p>
       </div>
       <div class="reveal">
@@ -61,12 +124,74 @@ const jsonLd = [
     </div>
   </section>
 
-  <!-- EDITOR NOTE: Add a "Program Highlights" section here once specific program
-       elements are supplied by Carlin (e.g. specific curriculum components, partners). -->
+  <!-- Program Pillars -->
+  <section class="bg-cream-200 py-24 md:py-32">
+    <div class="container-content">
+      <SectionHeading eyebrow="Program Pillars" title="What Pathways Builds" align="center" class="reveal mb-16" />
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        {pillars.map((p) => (
+          <div class="reveal rounded-2xl border border-ink-200 bg-cream-50 p-7">
+            <h2 class="text-lg font-semibold text-ink-900 mb-3">{p.title}</h2>
+            <p class="text-sm text-ink-500 leading-relaxed">{p.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Partners -->
+  <section class="container-content py-16">
+    <div class="reveal text-center">
+      <SectionHeading eyebrow="Program Partners & Supporters" title="Working With Industry Leaders" align="center" class="mb-10" />
+      <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
+        {partners.map((partner) => (
+          <img
+            src={partner.logo}
+            alt={partner.name}
+            width={partner.width}
+            height={partner.height}
+            loading="lazy"
+            class="h-12 w-auto object-contain"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Get Involved -->
+  <section class="bg-ink-900 py-24 text-cream-50 md:py-32">
+    <div class="container-content">
+      <SectionHeading eyebrow="Get Involved" title="Interested in Pathways to Success?" subtitle="Contact us to discuss youth participation, community delivery, mentorship, or partnership opportunities." light align="center" class="reveal mb-14" />
+      <div class="grid gap-8 md:grid-cols-3">
+        {getInvolved.map((item) => (
+          <div class="reveal flex flex-col rounded-2xl border border-ink-700 bg-ink-800 p-7 text-center">
+            <h2 class="text-lg font-semibold text-cream-50">{item.title}</h2>
+            <p class="mt-3 flex-1 text-sm leading-relaxed text-ink-300">{item.text}</p>
+            <div class="mt-6">
+              <Button href="/contact" variant="outline" size="sm" class="w-full border-ink-600 text-cream-50 hover:border-ember-400 hover:text-ember-400">{item.cta}</Button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="container-content py-24 md:py-32">
+    <SectionHeading eyebrow="Common Questions" title="Frequently asked questions" align="center" class="reveal mb-14" />
+    <div class="mx-auto max-w-3xl divide-y divide-ink-200">
+      {faqs.map((faq) => (
+        <div class="reveal py-6">
+          <h3 class="text-lg font-semibold text-ink-900">{faq.q}</h3>
+          <p class="mt-2 text-ink-600 leading-relaxed">{faq.a}</p>
+        </div>
+      ))}
+    </div>
+  </section>
 
   <CTABanner
-    title="Discover Your Pathway to Success"
-    subtitle="If your organization wants to partner with Kisik Pathways to Success or bring the program to your community, get in touch to discuss opportunities."
-    label="Get in Touch"
+    title="Contact Pathways to Success"
+    subtitle="Interested in bringing Kisik Pathways to Success to your community, school, or organization? Get in touch to discuss participation, mentorship, or partnership."
+    label="Contact Pathways to Success"
   />
 </Layout>

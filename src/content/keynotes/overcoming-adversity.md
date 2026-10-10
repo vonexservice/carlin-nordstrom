@@ -1,10 +1,12 @@
 ---
-title: "Overcoming Adversity"
-description: "Carlin shares his personal journey of battling through racism as the only First Nations player on his team, transforming that struggle into the motivation that propelled him to professional hockey and a career as a speaker."
+title: "Overcoming Adversity: Turning Setbacks Into Strength"
+description: "Carlin shares his journey from facing racism in minor hockey to earning an NCAA Division I scholarship and playing professional hockey, showing audiences how to respond to setbacks and keep moving toward their goals."
+audience: "Schools, youth organizations, First Nations communities, sports teams, conferences"
 outcomes:
-  - "Strategies for turning obstacles into fuel for growth"
-  - "Building resilience through life's challenges"
-  - "Finding your inner strength to push forward"
+  - "How to turn difficult experiences into motivation"
+  - "Practical ways to build resilience and confidence"
+  - "Why setbacks do not define your future"
+  - "How to stay committed when progress feels slow"
 order: 1
 featured: true
 ---

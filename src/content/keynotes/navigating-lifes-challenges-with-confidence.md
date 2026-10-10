@@ -1,10 +1,12 @@
 ---
-title: "Leadership"
-description: "We are all faced with challenges throughout our lives. Carlin's story of overcoming adversity, implementing leadership skills and developing teamwork is one your group needs to hear."
+title: "Lead Like a Teammate: Leadership, Accountability & Team Culture"
+description: "Carlin brings lessons from professional hockey and community leadership into a practical message about trust, accountability, and helping others succeed — built for teams that want stronger culture, collaboration, and performance."
+audience: "Corporations, leadership teams, sports organizations, employee development events"
 outcomes:
-  - "Developing a winning attitude in the face of adversity"
-  - "Leadership skills that translate from sport to life"
-  - "Building teamwork and community"
+  - "How strong leaders build trust and accountability"
+  - "Why \"your success is not my failure\" changes team culture"
+  - "How to support teammates and colleagues more effectively"
+  - "Practical ways to lead by example under pressure"
 order: 2
 featured: true
 ---

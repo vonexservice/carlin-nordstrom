@@ -1,10 +1,12 @@
 ---
-title: "Unlocking Your Inner Strength"
-description: "Empowering audiences to discover their inner strength and achieve success. Carlin speaks from life experience and from the heart, inspiring others with his story of overcoming adversity and achieving success."
+title: "Build Belief: Goal-Setting, Confidence & Taking Ownership"
+description: "Carlin helps audiences move from uncertainty to action, connecting goal-setting, self-belief, and personal responsibility to real steps people can take toward education, career, athletics, or community leadership."
+audience: "Students, young adults, career-development programs, youth leadership events"
 outcomes:
-  - "Identifying and harnessing personal strengths"
-  - "Goal-setting strategies from a professional athlete"
-  - "Creating a progressive plan to reach your dreams"
+  - "How to set meaningful goals and follow through"
+  - "How to build confidence through action"
+  - "Why ownership and effort matter more than talent alone"
+  - "How to create a practical plan for the next step"
 order: 3
 featured: true
 ---

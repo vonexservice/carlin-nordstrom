@@ -72,7 +72,7 @@ const jsonLd = [
           Founder of Kisik Youth Wellness and Kisik Pathways to Success
         </p>
         <div class="mt-10 flex flex-col gap-4 sm:flex-row">
-          <Button href={site.bookingHref} variant="primary" size="lg">Book Carlin to Speak</Button>
+          <Button href={site.bookingHref} variant="primary" size="lg">Check Speaking Availability</Button>
           <Button href="/keynotes" variant="outline" size="lg" class="border-ink-600 text-cream-50 hover:border-ember-400 hover:text-ember-400">
             Explore Keynote Topics
           </Button>
@@ -81,6 +81,25 @@ const jsonLd = [
       <div class="relative flex min-h-[420px] items-end justify-center self-end md:min-h-[600px]">
         <div class="absolute bottom-0 h-72 w-72 rounded-full bg-ember-600/20 blur-3xl md:h-[30rem] md:w-[30rem]"></div>
         <img src="/images/Carlin-pointing-left.png" alt="Carlin Nordstrom pointing toward the future" width="2022" height="2253" loading="eager" fetchpriority="high" class="relative z-10 max-h-[560px] w-auto object-contain object-bottom drop-shadow-[0_24px_24px_rgba(0,0,0,0.35)] md:max-h-[650px]" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 1b. Speaking reel -->
+  <section class="bg-ink-900 pb-16 md:pb-20">
+    <div class="container-content">
+      <div class="reveal mx-auto max-w-3xl overflow-hidden rounded-2xl shadow-2xl">
+        <div class="aspect-video">
+          <iframe
+            class="h-full w-full"
+            src="https://www.youtube.com/embed/W_XS4l5xu94"
+            title="Carlin Nordstrom speaking reel"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </div>
       </div>
     </div>
   </section>
@@ -240,6 +259,9 @@ const jsonLd = [
           <span class="mt-6 inline-block text-sm font-semibold uppercase tracking-[0.12em] text-ember-600">Explore keynotes &rarr;</span>
         </a>
       ))}
+    </div>
+    <div class="mt-12 flex justify-center">
+      <Button href={site.bookingHref} variant="primary" size="lg">Check Speaking Availability</Button>
     </div>
   </section>
 

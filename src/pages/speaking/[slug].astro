@@ -24,7 +24,7 @@ const jsonLd = [
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: site.name,
-    url: `${site.url}/speaking/${province.slug}`,
+    url: `${site.url}/speaking/${province.slug}/`,
     description: province.description,
     jobTitle: 'Indigenous Motivational & Keynote Speaker',
     areaServed: {
@@ -38,7 +38,7 @@ const jsonLd = [
 <Layout
   title={province.title}
   description={province.description}
-  canonical={`/speaking/${province.slug}`}
+  canonical={`/speaking/${province.slug}/`}
   jsonLd={jsonLd}
 >
   <section class="bg-ink-900 text-cream-50">

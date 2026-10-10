@@ -21,9 +21,14 @@ const {
 
 const fullTitle =
   title === site.name ? title : `${title} | ${site.name}`;
-const canonicalURL = canonical
-  ? new URL(canonical, site.url).href
-  : new URL(Astro.url.pathname, site.url).href;
+// Always end page URLs with a slash so canonicals match the sitemap
+// (Astro's sitemap lists every page as /path/). File URLs are left alone.
+const withTrailingSlash = (path: string) =>
+  path.endsWith('/') || /\.[a-z0-9]+$/i.test(path) ? path : `${path}/`;
+const canonicalURL = new URL(
+  withTrailingSlash(canonical ?? Astro.url.pathname),
+  site.url,
+).href;
 const ogImage = new URL(image, site.url).href;
 ---
 
@@ -32,7 +37,7 @@ const ogImage = new URL(image, site.url).href;
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
-<link rel="canonical" href={canonicalURL} />
+{!noindex && <link rel="canonical" href={canonicalURL} />}
 {noindex && <meta name="robots" content="noindex, nofollow" />}
 <meta name="generator" content={Astro.generator} />
 
@@ -40,7 +45,7 @@ const ogImage = new URL(image, site.url).href;
 <meta property="og:type" content={type} />
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
-<meta property="og:url" content={canonicalURL} />
+{!noindex && <meta property="og:url" content={canonicalURL} />}
 <meta property="og:site_name" content={site.name} />
 <meta property="og:image" content={ogImage} />
 <meta property="og:image:width" content="1200" />

@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await post.render();
 
-const canonical = `/blog/${post.slug}`;
+const canonical = `/blog/${post.slug}/`;
 const jsonLd = [
   {
     '@context': 'https://schema.org',

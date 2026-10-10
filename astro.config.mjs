@@ -11,6 +11,21 @@ export default defineConfig({
     tailwind({
       applyBaseStyles: false,
     }),
-    sitemap(),
+    sitemap({
+      // Keep noindex pages out of the sitemap.
+      filter: (page) => !page.includes('/thank-you'),
+    }),
   ],
+  // Polling file watch — only affects `astro dev`, never `astro build`.
+  // Native fs watch events are unreliable inside WebContainers (StackBlitz,
+  // CodeSandbox) and crash the dev server with
+  // "ENOENT ... path: undefined" shortly after startup.
+  vite: {
+    server: {
+      watch: {
+        usePolling: true,
+        interval: 300,
+      },
+    },
+  },
 });

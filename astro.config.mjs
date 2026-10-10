@@ -11,6 +11,9 @@ export default defineConfig({
     tailwind({
       applyBaseStyles: false,
     }),
-    sitemap(),
+    sitemap({
+      // Keep noindex pages out of the sitemap.
+      filter: (page) => !page.includes('/thank-you'),
+    }),
   ],
 });

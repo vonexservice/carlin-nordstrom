@@ -3,18 +3,18 @@ import Layout from '../layouts/Layout.astro';
 import CTABanner from '../components/CTABanner.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import Button from '../components/Button.astro';
-import { getGoogleReviews } from '../lib/googleReviews';
 import { getCollection } from 'astro:content';
 
 const title = 'Testimonials & Client Feedback';
 const description =
   'Testimonials from principals, organizers, and audiences who have experienced Carlin Nordstrom as a keynote speaker and workshop facilitator.';
 
-const testimonials = (await getCollection('testimonials'))
+const allTestimonials = (await getCollection('testimonials'))
   .filter((t) => !t.data.quote.startsWith('[PLACEHOLDER'))
   .sort((a, b) => a.data.order - b.data.order);
 
-const googleReviews = await getGoogleReviews();
+const testimonials = allTestimonials.filter((t) => t.data.role !== 'Google Review');
+const googleTestimonials = allTestimonials.filter((t) => t.data.role === 'Google Review');
 ---
 
 <Layout title={title} description={description}>
@@ -58,34 +58,23 @@ const googleReviews = await getGoogleReviews();
     </div>
   </section>
 
-  {googleReviews && (
+  {googleTestimonials.length > 0 && (
     <section class="bg-ink-900 py-24 text-cream-50 md:py-32">
       <div class="container-content">
         <div class="mx-auto max-w-3xl text-center">
           <p class="text-sm font-semibold uppercase tracking-[0.2em] text-ember-400">More Feedback</p>
           <h2 class="mt-4 text-display-md font-semibold text-cream-50">Google Reviews</h2>
-          <p class="mt-4 text-ink-300">{googleReviews.rating.toFixed(1)} out of 5 stars from {googleReviews.userRatingCount.toLocaleString()} Google reviews.</p>
         </div>
         <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {googleReviews.reviews.map((review) => (
+          {googleTestimonials.map((review) => (
             <article class="reveal rounded-2xl border border-ink-700 bg-ink-800 p-7">
-              <div class="flex items-center justify-between gap-4">
-                <span class="text-ember-400" aria-hidden="true">{'★'.repeat(Math.round(review.rating))}</span>
-                <span class="text-sm text-ink-300" aria-label={`${review.rating} out of 5 stars`}>{review.rating} out of 5 stars</span>
-              </div>
-              <p class="mt-5 text-ink-100 leading-relaxed">{review.text}</p>
+              <p class="text-ink-100 leading-relaxed">{review.data.quote}</p>
               <div class="mt-6 border-t border-ink-700 pt-5">
-                <p class="font-semibold text-cream-50">{review.authorName}</p>
-                <p class="mt-1 text-sm text-ink-300">{review.relativePublishTimeDescription}</p>
+                <p class="font-semibold text-cream-50">{review.data.author}</p>
+                <p class="mt-1 text-sm text-ink-300">Google Review</p>
               </div>
             </article>
           ))}
-        </div>
-        <div class="mt-10 text-center">
-          <a href={googleReviews.googleMapsUri} target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-lg border border-ink-600 px-6 py-3 font-semibold text-cream-50 transition-colors hover:border-ember-400 hover:text-ember-400">
-            Read all reviews on Google
-          </a>
-          <p class="mt-4 text-sm text-ink-300">Powered by Google</p>
         </div>
       </div>
     </section>

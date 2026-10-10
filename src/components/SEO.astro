@@ -19,8 +19,11 @@ const {
   type = 'website',
 } = Astro.props as SEOProps;
 
+// Add " | Carlin Nordstrom" only when it fits; Google cuts titles off
+// around 60 characters, so long blog titles stand on their own.
+const withSuffix = `${title} | ${site.name}`;
 const fullTitle =
-  title === site.name ? title : `${title} | ${site.name}`;
+  title === site.name || withSuffix.length > 60 ? title : withSuffix;
 // Always end page URLs with a slash so canonicals match the sitemap
 // (Astro's sitemap lists every page as /path/). File URLs are left alone.
 const withTrailingSlash = (path: string) =>

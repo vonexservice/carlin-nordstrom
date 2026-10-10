@@ -6,9 +6,6 @@ import Button from '../components/Button.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import { getCollection } from 'astro:content';
 
-const posts = await getCollection('blog', ({ data }) => !data.draft).then((items) =>
-  items.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
-);
 const keynotes = (await getCollection('keynotes')).sort((a, b) => a.data.order - b.data.order);
 const sponsors = [
   { name: 'SaskPower', logo: '/images/sponsors/saskpower.webp', width: 416, height: 76 },
@@ -293,27 +290,6 @@ const jsonLd = [
           </article>
         ))}
       </div>
-    </div>
-  </section>
-
-  <!-- Blog preview -->
-  <section class="container-content py-20">
-    <div class="flex flex-col justify-between gap-5 border-b border-ink-200 pb-6 md:flex-row md:items-end">
-      <div>
-        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-ember-600">From the Blog</p>
-        <h2 class="mt-2 text-display-sm font-semibold text-ink-900">Inspiring reads from the blog</h2>
-      </div>
-      <a href="/blog" class="text-sm font-semibold text-ember-700">View all posts &rarr;</a>
-    </div>
-    <div class="grid gap-6 pt-8 md:grid-cols-3">
-      {posts.map((post) => (
-        <a href={`/blog/${post.slug}`} class="group reveal rounded-2xl border border-ink-200 bg-cream-50 p-6 transition-all hover:-translate-y-1 hover:border-ember-300 hover:shadow-md">
-          {post.data.tags.length > 0 && (
-            <p class="text-sm font-semibold uppercase tracking-[0.1em] text-ember-600">{post.data.tags[0]}</p>
-          )}
-          <h3 class="mt-3 text-xl font-semibold text-ink-900 group-hover:text-ember-700">{post.data.title}</h3>
-        </a>
-      ))}
     </div>
   </section>
 

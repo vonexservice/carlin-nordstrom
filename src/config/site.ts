@@ -26,7 +26,7 @@ export const site: SiteConfig = {
   url: 'https://carlinnordstrom.com',
   description:
     'Carlin Nordstrom is an Indigenous motivational and keynote speaker, former professional hockey player, and founder of Kisik Youth Wellness and Kisik Pathways to Success. Empowering youth and inspiring communities across Canada with a story of overcoming adversity.',
-  ogImage: '/og-default.jpg',
+  ogImage: '/og-share.jpg',
   twitter: '@carlinnordstrom',
   email: 'carlin@carlindnordstrom.ca',
   phone: '+1-306-716-5761',
